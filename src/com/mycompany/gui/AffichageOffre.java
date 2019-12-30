@@ -35,9 +35,8 @@ import java.io.IOException;
  *
  * @author lenovo
  */
-public class AffichageOffre {
+public class AffichageOffre extends Form{
     
-     Form f;
      Button b;
      Resources theme;
       
@@ -46,8 +45,7 @@ public class AffichageOffre {
        Container c = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 
        theme = UIManager.initFirstTheme("/theme");
-       f = new Form(BoxLayout.y());
-       f.getStyle().setBgColor(0xEFEFF4);
+       this.setLayout(BoxLayout.y());
 
        OffreService os = new OffreService();
        
@@ -72,7 +70,18 @@ public class AffichageOffre {
             domaine.getAllStyles().setFont(Font.createTrueTypeFont("native:MainThin", (float) 3));
             
             Container offre = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-                        
+            
+            ActionListener consulter = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    new ConsulterOffre(o, theme).show();
+                }
+            };
+            
+            titre.addPointerPressedListener(consulter);
+            date_pub.addPointerPressedListener(consulter);
+            domaine.addPointerPressedListener(consulter);
+                     
             offre.add(titre);
             offre.add(date_pub);
             offre.add(domaine);
@@ -90,22 +99,15 @@ public class AffichageOffre {
             c.add(seperator);
        }
        
-       f.add(c);
+       this.add(c);
        
-       f.getToolbar().setTitleComponent(FlowLayout.encloseCenterMiddle(
+       this.getToolbar().setTitleComponent(FlowLayout.encloseCenterMiddle(
                                                 new Label("Listes des offres", "Title"),
                                                 new Label(""+os.getList2().size(), "InboxNumber")
                                         )
         );
        
        Toolbar t = new Toolbar();       
-       t.ToolBarInstall(f, theme);       
+       t.ToolBarInstall(this, theme);       
      }
-    
-    public Form getF(){
-        return f;
-    }
-    public void setF(Form f){
-        this.f=f;
-     }
-    }
+ }
