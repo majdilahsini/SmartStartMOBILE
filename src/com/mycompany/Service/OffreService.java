@@ -36,11 +36,16 @@ public class OffreService {
             List<Map<String, Object>> list = (List<Map<String, Object>>) offres.get("root");
             
             for (Map<String, Object> obj : list) {
-                           
-                
+               
                 Offre o = new Offre();
+                
                 Map<String, Object> domaine = (Map<String, Object>) obj.get("domaine");
                 Map<String, Object> timestamp = (Map<String, Object>) obj.get("datePublication");
+                Map<String, Object> typePost = (Map<String, Object>) obj.get("typePost");
+                Map<String, Object> skill1 = (Map<String, Object>) obj.get("skill1");
+                Map<String, Object> skill2 = (Map<String, Object>) obj.get("skill2");
+                Map<String, Object> skill3 = (Map<String, Object>) obj.get("skill3");
+                Map<String, Object> langueRef = (Map<String, Object>) obj.get("langueRef");
                 
                 double timestpam_date = (double) timestamp.get("timestamp");
                 Date dt = new Date((long) (timestpam_date * 1000));
@@ -50,13 +55,13 @@ public class OffreService {
                 o.setTitre(obj.get("titre").toString());
                 o.setDomaine(domaine.get("nom").toString());
                 o.setDate_publication(df.format(dt));
-                
-                //o.setDate_publication(obj.get("date_publication").toString());
-                /*o.setDomaine_id((int) Float.parseFloat(obj.get("domaine_id").toString()));
-                o.setDomaine_id((int) Float.parseFloat(obj.get("entreprise_id").toString()));
-                o.setDomaine_id((int) Float.parseFloat(obj.get("niveau_etude").toString()));
-                o.setDomaine_id((int) Float.parseFloat(obj.get("langue_ref").toString()));
-                o.setDomaine_id((int) Float.parseFloat(obj.get("domaine_id").toString()));*/
+                o.setSalaire((int) Float.parseFloat(obj.get("salaire").toString()));
+                o.setType_post(typePost.get("name").toString());
+                o.setNiveau_etude((int) Float.parseFloat(obj.get("niveauEtude").toString()));
+                o.setSkill1(skill1.get("name").toString());
+                o.setSkill2(skill2.get("name").toString());
+                o.setSkill3(skill3.get("name").toString());
+                o.setLangue(langueRef.get("nom").toString());
 
                 listOffres.add(o);
             }
@@ -81,4 +86,18 @@ public class OffreService {
         NetworkManager.getInstance().addToQueueAndWait(con);
         return listOffres;
     }
+
+    String score;
+    
+    public String getscore(int offre_id, int user_id) {
+        
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev/web/app_dev.php/offre/api/"+offre_id+"/getscore/"+user_id);  
+        con.addResponseListener((NetworkEvent evt) -> {
+            score = new String(con.getResponseData());
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return score;
+    } 
+    
 }
