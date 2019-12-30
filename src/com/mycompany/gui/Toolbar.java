@@ -27,18 +27,12 @@ public class Toolbar {
     public void ToolBarInstall(Form f, Resources res) {
         
         f.getToolbar().addCommandToSideMenu("Profil", null, null);
-        f.getToolbar().addCommandToSideMenu("Les Offres", null, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-
-                            AffichageOffre o = new AffichageOffre();
-                            o.getF().show();
-                    }         
-                });
+        f.getToolbar().addCommandToSideMenu("Les Offres", null, (ActionListener) (ActionEvent evt) -> {
+            new AffichageOffre().show();
+        });
         f.getToolbar().addCommandToSideMenu("Les Formations", null, null);
         f.getToolbar().addCommandToSideMenu("Les Entretiens", null, null);
         f.getToolbar().addCommandToSideMenu("Forum", null, null);
-        
         
         /*Button inboxButton = new Button("Inbox", inboxImage);
         inboxButton.setUIID("SideCommand");
