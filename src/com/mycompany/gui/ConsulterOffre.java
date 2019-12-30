@@ -97,7 +97,7 @@ public class ConsulterOffre extends Form {
         Label darkRect = new Label(res.getImage("dark-rect.png"), "StatsLabel");
         Label active = new Label("ACTIVE", "StatsLabel");
         ArcProgress ap = new ArcProgress();
-        ap.setProgress(70);
+        ap.setProgress(Integer.parseInt(os.getscore(offre.getId(), 14)));
         ap.setRenderPercentageOnTop(false);
         
         Container box = BoxLayout.encloseY(

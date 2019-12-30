@@ -17,7 +17,7 @@ public class Offre {
     private String titre;
     private String domaine;
     private String entreprise;
-    private String niveau_etude;
+    private int niveau_etude;
     private String langue;
     private String type_post;
     private String skill1;
@@ -59,11 +59,11 @@ public class Offre {
         this.entreprise = entreprise;
     }
 
-    public String getNiveau_etude() {
+    public int getNiveau_etude() {
         return niveau_etude;
     }
 
-    public void setNiveau_etude(String niveau_etude) {
+    public void setNiveau_etude(int niveau_etude) {
         this.niveau_etude = niveau_etude;
     }
 
@@ -131,7 +131,7 @@ public class Offre {
         this.photo = photo;
     }
 
-    public Offre(int id, String titre, String domaine, String entreprise, String niveau_etude, String langue, String type_post, String skill1, String skill2, String skill3, int salaire, String date_publication, String photo) {
+    public Offre(int id, String titre, String domaine, String entreprise, int niveau_etude, String langue, String type_post, String skill1, String skill2, String skill3, int salaire, String date_publication, String photo) {
         this.id = id;
         this.titre = titre;
         this.domaine = domaine;
@@ -147,7 +147,7 @@ public class Offre {
         this.photo = photo;
     }
 
-    public Offre(String titre, String domaine, String entreprise, String niveau_etude, String langue, String type_post, String skill1, String skill2, String skill3, int salaire, String date_publication, String photo) {
+    public Offre(String titre, String domaine, String entreprise, int niveau_etude, String langue, String type_post, String skill1, String skill2, String skill3, int salaire, String date_publication, String photo) {
         this.titre = titre;
         this.domaine = domaine;
         this.entreprise = entreprise;

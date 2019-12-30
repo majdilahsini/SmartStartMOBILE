@@ -6,6 +6,7 @@
 package com.mycompany.gui;
 
 import com.codename1.components.ImageViewer;
+import com.codename1.components.InfiniteProgress;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import static com.codename1.ui.CN.FACE_PROPORTIONAL;
@@ -16,6 +17,7 @@ import com.codename1.ui.Font;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Dimension;
@@ -30,6 +32,7 @@ import com.mycompany.Entite.Offre;
 import com.mycompany.Service.FormationService;
 import com.mycompany.Service.OffreService;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -40,16 +43,17 @@ public class AffichageOffre extends Form{
      Button b;
      Resources theme;
       
-     public AffichageOffre(){
+     public AffichageOffre() throws InterruptedException{
 
        Container c = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 
        theme = UIManager.initFirstTheme("/theme");
        this.setLayout(BoxLayout.y());
-
-       OffreService os = new OffreService();
        
-       for(Offre o :os.getList2()){
+       OffreService os = new OffreService();
+       ArrayList<Offre> offres = os.getList2();
+       
+       for(Offre o : offres){
            
             Label titre = new Label(o.getTitre());
             Label date_pub = new Label(o.getDate_publication());
@@ -98,15 +102,43 @@ public class AffichageOffre extends Form{
             c.add(offre);
             c.add(seperator);
        }
-       
+ 
        this.add(c);
+       
+       
+       this.getToolbar().addSearchCommand(new ActionListener () {
+           @Override
+           public void actionPerformed(ActionEvent evt) {
+                String text = (String) evt.getSource();
+                if (text.length() != 0 && text != null){
+                    for (int i=0; i<offres.size()*2 ; i+=2) {
+                        Container container = (Container) c.getComponentAt(i);
+                        Label titre = (Label) container.getComponentAt(0);
+                        if (titre.getText().contains(text)) {
+                            container.setHidden(false);
+                            container.setVisible(true);
+                        } else {
+                            container.setHidden(true);
+                            container.setVisible(false);
+                        }
+                    } 
+                } else {
+                        for (int i=0; i<offres.size()*2 ; i+=2) {
+                            Container container = (Container) c.getComponentAt(i);
+                            container.setHidden(false);
+                            container.setVisible(true);
+                        }
+                }
+           }             
+       });
        
        this.getToolbar().setTitleComponent(FlowLayout.encloseCenterMiddle(
                                                 new Label("Listes des offres", "Title"),
-                                                new Label(""+os.getList2().size(), "InboxNumber")
+                                                new Label(""+offres.size(), "InboxNumber")
                                         )
         );
        
+    
        Toolbar t = new Toolbar();       
        t.ToolBarInstall(this, theme);       
      }
