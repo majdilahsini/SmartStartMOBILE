@@ -50,7 +50,7 @@ public class Smartmain {
         
         welcome A = new welcome();
         A.getF().show();
-        
+        //
     }
 
     public void stop() {
