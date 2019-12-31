@@ -5,15 +5,20 @@
  */
 package com.mycompany.gui;
 
+import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
+import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.spinner.Picker;
 import com.mycompany.Entite.Formation;
 import com.mycompany.Service.FormationService;
+import java.util.Date;
 
 /**
  *
@@ -33,6 +38,12 @@ public class modifierFormation {
         TextField t3 = new TextField();
         Label l4 = new Label("Date debut:");
         TextField t4 = new TextField();
+        Picker datePicker1 = new Picker();
+        datePicker1.setType(Display.PICKER_TYPE_DATE);
+        
+        Picker datePicker2 = new Picker();
+        datePicker2.setType(Display.PICKER_TYPE_DATE);
+        
         Label l5 = new Label("Date Fin:");
         TextField t5 = new TextField();
         Label l6 = new Label("Prix:");
@@ -46,8 +57,8 @@ public class modifierFormation {
         f.add(l1);f.add(t1);
         f.add(l2); f.add(t2);
         f.add(l3);f.add(t3);
-        f.add(l4);f.add(t4);
-        f.add(l5);f.add(t5);
+        f.add(l4);f.add(datePicker1);
+        f.add(l5);f.add(datePicker2);
         f.add(l6);f.add(t6);
         f.add(l7);f.add(t7);
         f.add(l9);f.add(t9);
@@ -72,8 +83,15 @@ public class modifierFormation {
         btnmodif.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                Formation i = new Formation(Formation.focusedId,t1.getText(),t2.getText(),Integer.parseInt(t3.getText()),t4.getText()
-                ,t5.getText(),t7.getText(),Double.parseDouble(t6.getText()),Integer.parseInt(t8.getText()),t9.getText());
+                Date date1 = datePicker1.getDate();
+                Date date2 = datePicker2.getDate();
+                DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                String strDate1 = dateFormat1.format(date1);
+                                String strDate2 = dateFormat1.format(date2);
+
+                Formation i = new Formation(Formation.focusedId,t1.getText(),t2.getText(),Integer.parseInt(t3.getText()),strDate1
+                ,strDate2,t7.getText(),Double.parseDouble(t6.getText()),Integer.parseInt(t8.getText()),t9.getText());
                 FormationService is = new FormationService();
                 is.ModifierFormation(i);
                 
