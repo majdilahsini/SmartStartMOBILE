@@ -9,6 +9,7 @@ import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.Entite.Formation;
+import com.mycompany.Entite.Inscription;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class FormationService {
                 float ref = Float.parseFloat(obj.get("ref").toString());
                 p.setRef((int) ref);
               //  float domain = Float.parseFloat(obj.get("domaine").toString());
-               p.setNomentreprise(entreprise.get("fullname").toString());
+               p.setNomentreprise(entreprise.get("username").toString());
 
                 p.setNomdomaine(domaine.get("nomDomaine").toString());
                                 p.setNom(obj.get("nom").toString());
@@ -144,6 +145,20 @@ public class FormationService {
             return null;
         }
         
+     public void AjouterInscription(Inscription i){
+         ConnectionRequest con = new ConnectionRequest();
+         String url="http://localhost/pidev2/web/app_dev.php/api/inscriptions/addinscription/"
+                 +i.getUser_id()+"/"+i.getFormation_ref()+"/"+i.getLettre_motivation()+"/"+
+                 i.getSpecialite()+"/"+i.getEcole();
+          con.setUrl(url);
+        con.setPost(true);
+          con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    }
      
         
 }

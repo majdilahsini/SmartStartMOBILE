@@ -25,13 +25,21 @@ import java.io.IOException;
 public class Toolbar {
     
     public void ToolBarInstall(Form f, Resources res) {
-        
-        f.getToolbar().addCommandToSideMenu("Profil", null, null);
+
+            
+        f.getToolbar().addCommandToSideMenu("Home", null, (ActionListener) (ActionEvent evt) -> {
+          //  new welcomeuser().getF().show();
+        });
+            f.getToolbar().addCommandToSideMenu("Profil", null, null);
         f.getToolbar().addCommandToSideMenu("Les Offres", null, (ActionListener) (ActionEvent evt) -> {
             new AffichageOffre().show();
         });
-        f.getToolbar().addCommandToSideMenu("Les Formations", null, null);
+        f.getToolbar().addCommandToSideMenu("Les Formations", null,(ActionListener) (ActionEvent evt) -> {
+            new AffichageFormationuser().getF().show();
+        });
         f.getToolbar().addCommandToSideMenu("Les Entretiens", null, null);
+        f.getToolbar().addCommandToSideMenu("Les Projets", null, null);
+
         f.getToolbar().addCommandToSideMenu("Forum", null, null);
         
         /*Button inboxButton = new Button("Inbox", inboxImage);
