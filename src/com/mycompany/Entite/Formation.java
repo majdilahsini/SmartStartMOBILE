@@ -23,6 +23,11 @@ public class Formation {
       private int entreprise_id;
     private int domaine_id ;
      public static int focusedId ;
+          public static String focusedIdd ;
+          public static int focusedIddd ;
+                    public static int focusedIduser ;
+
+
     private String Nom ; 
   
     private String description ;
