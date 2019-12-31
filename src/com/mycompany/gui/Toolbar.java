@@ -18,6 +18,7 @@ import com.codename1.ui.util.Resources;
 import java.io.IOException;
 
 
+
 /**
  *
  * @author Sadbo
@@ -32,7 +33,20 @@ public class Toolbar {
         });
             f.getToolbar().addCommandToSideMenu("Profil", null, null);
         f.getToolbar().addCommandToSideMenu("Les Offres", null, (ActionListener) (ActionEvent evt) -> {
-            new AffichageOffre().show();
+            try {
+                new AffichageOffre().show();
+            } catch (InterruptedException ex) {
+               
+            }
+        });
+        f.getToolbar().addCommandToSideMenu("CrowFunding", null, (ActionListener) (ActionEvent evt) -> {
+           /* try {
+                toutprojet p=new toutprojet();
+                 p.getF().show();
+            } catch (IOException ex) {
+              
+            }*/
+            
         });
         f.getToolbar().addCommandToSideMenu("Les Formations", null,(ActionListener) (ActionEvent evt) -> {
             new AffichageFormationuser().getF().show();
