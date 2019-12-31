@@ -5,13 +5,19 @@
  */
 package com.mycompany.gui;
 
+import com.codename1.l10n.ParseException;
 import com.codename1.ui.Container;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.Resources;
 import com.mycompany.Entite.DomaineFormation;
 import com.mycompany.Entite.Formation;
 import com.mycompany.Service.FormationService;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,68 +25,95 @@ import java.util.ArrayList;
  * @author lenovo
  */
 public class HomeForm extends Form  {
-     static Formation film = new Formation();
-    static ArrayList<Formation> listProduits;
-        public  HomeForm(com.codename1.ui.util.Resources resourceObjectInstance) {
-       initGuiBuilderComponents(resourceObjectInstance);
-            FormationService ss = new FormationService();
-                    ArrayList<Formation> list=ss.getList2();
-                    for(Formation s: list){
-                                 Container seance = new Container(new BoxLayout(BoxLayout.X_AXIS)); 
-                                          Container lblSeance = new Container(new BoxLayout(BoxLayout.Y_AXIS)); 
-                                                   Container detailSeance = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-                                                            Container btns = new Container(new BoxLayout(BoxLayout.X_AXIS));
-                                                            
-                                                            Label lblnomProd = new Label("Nom: ");
-                                                                        Label lbprix = new Label("Domaine : ");
-                                                                       Label lbentreprise = new Label("entreprise : ");
+      Form f;
+   
+private Resources theme;
+    public HomeForm() {
+        f = new Form("home");
+       
+                theme = UIManager.initFirstTheme("/theme");
 
-                                                                           lblSeance.add(lblnomProd);
-            lblSeance.add(lbprix);
-                        lblSeance.add(lbentreprise);
+        
+       
+        
+         //Form home = new Form("Sidebar Menu");
 
-            Label nom =new Label();
-            Label prix = new Label();
-            Label entreprise = new Label();
+        com.codename1.ui.Toolbar tb = f.getToolbar();
+        //Image icon = theme.getImage("load.png");
+        Container topBar = BorderLayout.east(new Label());
+        topBar.add(BorderLayout.SOUTH, new Label("Application Name"));
+        tb.addComponentToSideMenu(topBar);
+
+        tb.addMaterialCommandToSideMenu("projet", FontImage.MATERIAL_WEB, e -> {
+ toutprojet a;
+            try {
+                a = new toutprojet();
+                  a.getF().show();
+            } catch (IOException ex) {
+                
+            }
+                 
+        });
+        tb.addMaterialCommandToSideMenu("my projet", FontImage.MATERIAL_SETTINGS, e -> {
+            AffichageProjet a;
+             try {
+                a = new AffichageProjet();
+                  a.getF().show();
+            } catch (IOException ex) {
+                
+            }
             
-            nom.setText(String.valueOf(s.getNom()));
-            prix.setText(String.valueOf(s.getNomdomaine()));
-            entreprise.setText(String.valueOf(s.getNomentreprise()));
-          //prix.setText(String.valueOf(s.getDomaine_id()));
-            detailSeance.add(nom);
-            detailSeance.add(prix);
-                        detailSeance.add(entreprise);
-
-            seance.add(lblSeance);
-            seance.add(detailSeance);
+        });
+        tb.addMaterialCommandToSideMenu("investment ", FontImage.MATERIAL_INFO, e -> {
+            afficheInvestment ai;
             
-            seance.add(btns);
-            
-             gui_Box_Layout_Y.add(seance);
- 
-                  
-                                                                        
+            try {  
+                ai = new afficheInvestment();
+            } catch (ParseException ex) {
+            }
+        });
+        
+        /*f.getToolbar().addCommandToLeftBar("Back", theme.getImage("back-command.png"), new ActionListener() {
 
-                                                            
-                                                            
-                    }
-                        
-                    }
-    protected com.codename1.ui.Container gui_Box_Layout_Y = new com.codename1.ui.Container(new com.codename1.ui.layouts.BoxLayout(com.codename1.ui.layouts.BoxLayout.Y_AXIS));
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                f.showBack();
 
-// <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
-        setLayout(new com.codename1.ui.layouts.LayeredLayout());
-        setInlineStylesTheme(resourceObjectInstance);
-        setScrollableY(true);
-                setInlineStylesTheme(resourceObjectInstance);
-        setTitle("list des formations");
-        setName("test");
-        gui_Box_Layout_Y.setPreferredSizeStr("111.37566mm 56.613758mm");
-                gui_Box_Layout_Y.setInlineStylesTheme(resourceObjectInstance);
-        gui_Box_Layout_Y.setName("Box_Layout_Y");
-        addComponent(gui_Box_Layout_Y);
-        ((com.codename1.ui.layouts.LayeredLayout)gui_Box_Layout_Y.getParent().getLayout()).setInsets(gui_Box_Layout_Y, "23.003801% auto auto 16.480448%").setReferenceComponents(gui_Box_Layout_Y, "-1 -1 -1 -1").setReferencePositions(gui_Box_Layout_Y, "0.0 0.0 0.0 0.0");
-    }// </editor-fold>
+            }
+        });*/
+        
+        
+        
+        
+        
+        
+        f.show();
+    }
 
+    public Form getF() {
+        return f;
+    }
+
+    public void setF(Form f) {
+        this.f = f;
+    }
+
+    public Resources getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Resources theme) {
+        this.theme = theme;
+    }
+
+    public boolean isFocusScrolling() {
+        return focusScrolling;
+    }
+
+    public void setFocusScrolling(boolean focusScrolling) {
+        this.focusScrolling = focusScrolling;
+    }
+    
+    
+    
 }

@@ -36,7 +36,11 @@ public class ConsulterOffre extends Form {
                                                 new Label(""+ offre.getTitre(), "Title")));
         
         this.getToolbar().addCommandToRightBar("Back", null, (ActionListener) (ActionEvent evt) -> {
-            new AffichageOffre().show();
+            try {
+                new AffichageOffre().show();
+            } catch (InterruptedException ex) {
+                
+            }
         });
         
         this.setLayout(BoxLayout.y());
