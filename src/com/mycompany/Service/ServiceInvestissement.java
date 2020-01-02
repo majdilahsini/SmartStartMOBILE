@@ -30,18 +30,7 @@ import java.util.Map;
 public class ServiceInvestissement {
     
     
-     public void ajoutinvest(int montant,long Numcartebancaire,int idP,int idU) {
-        ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/showvisiteur?montant=" + montant+"&Numcartebancaire="+Numcartebancaire+"&idU="+idU+"&idP="+idP;// création de l'URL
-        con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
-
-        con.addResponseListener((e) -> {
-            String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
-
-        });
-        NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
-    }
+   
     
      public ArrayList<Investissement> parseListInvestmentJson(String json) throws ParseException {
 
@@ -122,7 +111,7 @@ public class ServiceInvestissement {
     
     public ArrayList<Investissement> getInvest(int id){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost:82/piedv/web/app_dev.php/projetuser/investm?id=18"); 
+        con.setUrl("http://localhost:82/piedv/web/app_dev.php/projetuser/affichinvM?id=18"); 
         System.out.println("---------------------------------------------------------------------test1-----------------------------------");//
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override

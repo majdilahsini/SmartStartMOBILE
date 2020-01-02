@@ -29,7 +29,7 @@ public class ServiceProjet {
     
       public void ajoutinvest(int montant,long Numcartebancaire,int idP,int idU) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/showvisiteur?montant=" + montant+"&Numcartebancaire="+Numcartebancaire+"&idU="+idU+"&idP="+idP;// création de l'URL
+        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/ajoutinvestmo?montant=" + montant+"&Numcartebancaire="+Numcartebancaire+"&idU="+idU+"&idP="+idP;// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
@@ -191,7 +191,7 @@ public class ServiceProjet {
     
    public void modifierProjet(Projet p) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/modifierM?id="+p.getIdProjet()+"&montant=" + p.getMontant()+"&dated="+p.getDateDebutProjet()+"&compte="+p.getCompteBancaire()+"&desc="+p.getDescriptionProjet()+"&vf="+p.getVotreFinance()+"&NT="+p.getNbreTeam()+"&cat="+p.getIdCategorie()+"&datef="+p.getDateFinProjet();// création de l'URL
+        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/modifierM?id="+p.getIdProjet()+"&nom=" + p.getNomprojet()+"&montant=" + p.getMontant()+"&dated="+p.getDateDebutProjet()+"&compte="+p.getCompteBancaire()+"&desc="+p.getDescriptionProjet()+"&vf="+p.getVotreFinance()+"&NT="+p.getNbreTeam()+"&cat="+p.getIdCategorie()+"&datef="+p.getDateFinProjet();// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
