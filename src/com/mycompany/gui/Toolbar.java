@@ -40,12 +40,12 @@ public class Toolbar {
             }
         });
         f.getToolbar().addCommandToSideMenu("CrowFunding", null, (ActionListener) (ActionEvent evt) -> {
-           /* try {
+            try {
                 toutprojet p=new toutprojet();
                  p.getF().show();
             } catch (IOException ex) {
               
-            }*/
+            }
             
         });
         f.getToolbar().addCommandToSideMenu("Les Formations", null,(ActionListener) (ActionEvent evt) -> {
