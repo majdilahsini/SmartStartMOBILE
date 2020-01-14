@@ -43,7 +43,7 @@ public class AffichageOffre extends Form{
      Button b;
      Resources theme;
       
-     public AffichageOffre() throws InterruptedException{
+     public AffichageOffre() {
 
        Container c = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 
@@ -114,13 +114,14 @@ public class AffichageOffre extends Form{
                     for (int i=0; i<offres.size()*2 ; i+=2) {
                         Container container = (Container) c.getComponentAt(i);
                         Label titre = (Label) container.getComponentAt(0);
-                        if (titre.getText().contains(text)) {
+                        if (titre.getText().toLowerCase().contains(text.toLowerCase())) {
                             container.setHidden(false);
                             container.setVisible(true);
                         } else {
                             container.setHidden(true);
                             container.setVisible(false);
                         }
+                        refreshTheme();
                     } 
                 } else {
                         for (int i=0; i<offres.size()*2 ; i+=2) {
@@ -128,6 +129,7 @@ public class AffichageOffre extends Form{
                             container.setHidden(false);
                             container.setVisible(true);
                         }
+                        refreshTheme();
                 }
            }             
        });

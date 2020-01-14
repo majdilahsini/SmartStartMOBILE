@@ -33,11 +33,11 @@ public class Toolbar {
         });
             f.getToolbar().addCommandToSideMenu("Profil", null, null);
         f.getToolbar().addCommandToSideMenu("Les Offres", null, (ActionListener) (ActionEvent evt) -> {
-            try {
+        
                 new AffichageOffre().show();
-            } catch (InterruptedException ex) {
+      
                
-            }
+            
         });
         f.getToolbar().addCommandToSideMenu("CrowFunding", null, (ActionListener) (ActionEvent evt) -> {
             try {
