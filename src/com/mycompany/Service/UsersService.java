@@ -50,6 +50,7 @@ int a;
 
              List<Map<String, Object>> list = (List<Map<String, Object>>) Users.get("root");
                   
+             if (list != null)
                 for (Map<String, Object> obj : list) {
                
                 users p = new users();
@@ -164,6 +165,7 @@ public users RecupererUser(String json) {
                 
                byte[] data = (byte[]) con.getResponseData();
                  String s = new String(data);
+           
                 if (!(parseListTaskJson(s)).isEmpty()) {
                  users user=parseListTaskJson(s).get(0);
                  String z="[ROLE_USER]";
