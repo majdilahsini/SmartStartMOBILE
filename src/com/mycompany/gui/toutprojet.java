@@ -367,8 +367,16 @@ f.add(BorderLayout.CENTER, content);
         });
           Style si = UIManager.getInstance().getComponentStyle("Button"); 
 FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
-          f.getToolbar().addCommandToLeftBar("", backimg, (ev)->{//HomeForm h=new HomeForm();
-        //  h.getF().show();
+          f.getToolbar().addCommandToLeftBar("", backimg, (ev)->{
+              if(Toolbar.id==1)
+              {
+         welcome y=new welcome();
+        y.getF().show();   
+              }
+              else if(Toolbar.id==2){
+                  welcomeentreprise y=new welcomeentreprise();
+        y.getF().show();   
+              }
         
           });   
     }
