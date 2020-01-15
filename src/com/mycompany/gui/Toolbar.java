@@ -25,6 +25,7 @@ import java.io.IOException;
  */
 public class Toolbar {
     
+    static int id=0;
     public void ToolBarInstall(Form f, Resources res) {
 
             
@@ -42,6 +43,7 @@ public class Toolbar {
         f.getToolbar().addCommandToSideMenu("CrowFunding", null, (ActionListener) (ActionEvent evt) -> {
             try {
                 toutprojet p=new toutprojet();
+                id=1;
                  p.getF().show();
             } catch (IOException ex) {
               

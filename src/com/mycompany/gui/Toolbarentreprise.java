@@ -9,6 +9,7 @@ import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 
 /**
  *
@@ -19,7 +20,17 @@ public class Toolbarentreprise {
             f.getToolbar().addCommandToSideMenu("Home", null, (ActionListener) (ActionEvent evt) -> {
             new welcomeentreprise().getF().show();
         });
-        f.getToolbar().addCommandToSideMenu("Profil", null, null);
+        f.getToolbar().addCommandToSideMenu("CrowFunding", null, (ActionListener) (ActionEvent evt) -> {
+            try {
+                
+                Toolbar.id=2;
+                toutprojet p=new toutprojet();
+                 p.getF().show();
+            } catch (IOException ex) {
+              
+            }
+            
+        });
         f.getToolbar().addCommandToSideMenu("Mes Offres", null, (ActionListener) (ActionEvent evt) -> {
          //   new AffichageOffre().show();
         });
