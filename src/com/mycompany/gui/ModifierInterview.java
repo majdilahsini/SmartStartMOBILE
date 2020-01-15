@@ -10,6 +10,7 @@ import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Calendar;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Font;
 import com.codename1.ui.Form;
@@ -131,7 +132,7 @@ Form f;
         
             public void actionPerformed(ActionEvent evt) {
                 
-                AfficheInterview c = new AfficheInterview();
+                AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
             }
                      }
@@ -142,6 +143,8 @@ Form f;
             @Override
         
             public void actionPerformed(ActionEvent evt) {
+         if(!Dialog.show("Modification","Confirmer la modification ? ","Retour","Confirmer")){
+
                    Date date = datePicker.getDate();
                    //System.err.println(date);Wed Jan 01 14:31:57 WAT 2020
                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -156,13 +159,15 @@ Form f;
                 interviewService is=new interviewService();
                 is.ModifierEntretien(i);
  
-                AfficheInterview c = new AfficheInterview();
+                AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
             }
                             else f.add(testdate);
 
             }
-                     }
+                     else 
+                    {}
+            }}
           );
 
 

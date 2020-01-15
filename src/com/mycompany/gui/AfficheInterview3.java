@@ -7,15 +7,12 @@ package com.mycompany.gui;
 
 import com.codename1.components.FloatingActionButton;
 import com.codename1.components.SpanLabel;
-import com.codename1.components.ToastBar;
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import static com.codename1.ui.Component.CENTER;
-import com.codename1.ui.ComponentGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
-import com.codename1.ui.Display;
 import com.codename1.ui.Font;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -23,27 +20,23 @@ import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Dimension;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.Border;
-import com.codename1.ui.plaf.Style;
 import static com.codename1.ui.plaf.Style.BACKGROUND_NONE;
 import com.codename1.ui.util.Resources;
 import com.mycompany.Entite.Interviews;
-import com.mycompany.Service.ServiceTask;
+import com.mycompany.Entite.Offre;
 import com.mycompany.Service.interviewService;
 import java.util.ArrayList;
-import com.codename1.ui.Toolbar;
-import static com.codename1.ui.layouts.BorderLayout.WEST;
 import java.util.Date;
 
 /**
  *
  * @author User
  */
-public class AfficheInterview2 {
-    Form f;
+public class AfficheInterview3 {
+     Form f;
         Form f3;
                             Container c2 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
                            
@@ -60,12 +53,14 @@ Button encours;
 Button futur;
     SpanLabel lb;
 
-    public AfficheInterview2() {
+    public AfficheInterview3() {
 
            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                          String today = dateFormat.format(new Date());
      f = new Form(BoxLayout.y());
        interviewService serviceTask=new interviewService();
+              ArrayList<Interviews> ent = serviceTask.getList3();
+
        FloatingActionButton fab = FloatingActionButton.createFAB(FontImage.MATERIAL_ADD);
 fab.addActionListener((ActionListener) (ActionEvent evt) -> {
     AfficheOffres_Ent h = new AfficheOffres_Ent();
@@ -74,7 +69,7 @@ fab.addActionListener((ActionListener) (ActionEvent evt) -> {
        });fab.bindFabToContainer(f.getContentPane());
         f.getToolbar().setTitleComponent(FlowLayout.encloseCenterMiddle(
                                                 new Label("Listes des Entretien", "Title"),
-                                                new Label(""+serviceTask.getList2().size(), "InboxNumber")
+                                                new Label(""+serviceTask.getList3().size(), "InboxNumber")
                                         ));
             com.mycompany.gui.Toolbar t = new com.mycompany.gui.Toolbar();       
        t.ToolBarInstall(f, theme); 
@@ -107,7 +102,7 @@ passé.addPointerPressedListener(new ActionListener() {
              futur.getAllStyles().setBackgroundGradientEndColor(CENTER, true);
 
              c2.removeAll();
-               for (Interviews i : es.getList2() ){
+               for (Interviews i : es.getList3() ){
                    if (i.getEtat() == 2){
                 addItem(i);
             }}
@@ -122,7 +117,7 @@ futur.addPointerPressedListener(new ActionListener() {
              encours.getAllStyles().setBackgroundGradientEndColor(CENTER, true);
              futur.getAllStyles().setBackgroundGradientEndColor(CENTER, true);
              c2.removeAll();
-               for (Interviews i : es.getList2() ){
+               for (Interviews i : es.getList3() ){
                    if (i.getEtat() == 1){
                 addItem(i);
             }}
@@ -137,7 +132,7 @@ encours.addPointerPressedListener(new ActionListener() {
              futur.getAllStyles().setBackgroundGradientEndColor(CENTER, true);
 
              c2.removeAll();
-               for (Interviews i : es.getList2() ){
+               for (Interviews i : es.getList3() ){
                    if (i.getDate().equals(today)){
                 addItem(i);
             }}
@@ -145,7 +140,7 @@ encours.addPointerPressedListener(new ActionListener() {
          }
      });
 
-        for (Interviews i : serviceTask.getList2() ){
+        for (Interviews i : serviceTask.getList3() ){
                 addItem(i);
             }
 
@@ -153,10 +148,10 @@ encours.addPointerPressedListener(new ActionListener() {
               f.getToolbar().addSearchCommand(new ActionListener () {
            @Override
            public void actionPerformed(ActionEvent e) {
-              interviewService serviceTask=new interviewService();
+           //   interviewService serviceTask=new interviewService();
                 String text = (String) e.getSource();
                 if (text.length() != 0 && text != null){
-                    for (int i=0; i<serviceTask.getList2().size()*2 ;i+=2) {
+                    for (int i=0; i<ent.size()*2 ;i+=2) {
 
                         Container container = (Container) c2.getComponentAt(i);
               
@@ -175,7 +170,7 @@ encours.addPointerPressedListener(new ActionListener() {
                                 } 
                 } else {
 
-                        for (int i=0; i<serviceTask.getList2().size()*2 ; i+=2) {
+                        for (int i=0; i<ent.size()*2 ; i+=2) {
                             Container container = (Container) c2.getComponentAt(i);
                             container.setHidden(false);
                             container.setVisible(true);
@@ -275,6 +270,7 @@ h.getF().show();
             fullname.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                
                 f2 = new Form(BoxLayout.y());
                    String label = ("Condidat "+contact.getFullname());
 f2.setTitle(label);
@@ -311,22 +307,24 @@ f2.setTitle(label);
                 ch.add(heuree);
                 ch.add(heureee);
                 
-              Toolbar te = f2.getToolbar();
+              com.codename1.ui.Toolbar te = f2.getToolbar();
               
              
                Supprimer.addActionListener(new ActionListener() {
             @Override
         
             public void actionPerformed(ActionEvent evt) {
+     if(!Dialog.show("Annuler Entretien","Confirmer l'annulation de l'entretier ? ","Retour","Supprimer")){
+
                            interviewService h = new interviewService();
 
                 h.SupprimerEntretien(contact.getRef_ent());
                    
-                AfficheInterview2 c = new AfficheInterview2();
+                AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
         
-            }
-                     }
+            } else {}
+                     }}
           );
                
                Modifier.addActionListener(new ActionListener() {
@@ -343,7 +341,7 @@ h.getF().show();
                te.addCommandToRightBar("< Retour", null ,new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-AfficheInterview2 c = new AfficheInterview2();
+AfficheInterview3 c = new AfficheInterview3();
                        f2.add("\n");
  c.getF().show();            }
         });

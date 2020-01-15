@@ -31,6 +31,7 @@ import com.codename1.ui.validation.Validator;
 import com.codename1.util.Base64;
 import com.mycompany.Entite.Interviews;
 import com.mycompany.Entite.OffreEnt;
+import com.mycompany.Entite.TwilioSMS;
 import com.mycompany.Service.OffreEntService;
 import com.mycompany.Service.interviewService;
 import java.util.Date;
@@ -132,7 +133,7 @@ v.addConstraint(datePicker,new Constraint() {
                 interviewService is=new interviewService();
                 is.AjouterEntretien(i);
  ///////////////////////////////////
- String accountSID = "ACdc77affecc39c811afbb3fe81b3beed0";
+ /*String accountSID = "ACdc77affecc39c811afbb3fe81b3beed0";
 String authToken = "03ec4f223bf7db5c491232febb28efde";
 String fromPhone = "+13306178577";
                  Response<Map> result = Rest.post("https://api.twilio.com/2010-04-01/Accounts/" + accountSID + "/Messages.json").
@@ -141,13 +142,16 @@ String fromPhone = "+13306178577";
         queryParam("Body", "Félicitation vous étes selectioné pour un entretien "+"\n"+"avec l'Entreprise:"+OffreEnt.focusedNomEntre+"\n"+"pour le Poste:"+"\n"+OffreEnt.focusedPoste+"\n"+"Heure:"+time+"\n"+"Date:"+"\n"+strDate+"\n").
         header("Authorization", "Basic " + Base64.encodeNoNewline((accountSID + ":" + authToken).getBytes())).
         getAsJsonMap();
-                 
+               */
+    TwilioSMS sms=new TwilioSMS("ACaa1a4f312d916842b47cd283604a4b74","1392160125d5296e5eac8e2704fae690","+12054303463");
+            sms.sendSmsAsync("+21652003948","Félicitation vous étes selectioné pour un entretien "+"\n"+"avec l'Entreprise:"+OffreEnt.focusedNomEntre+"\n"+"pour le Poste:"+"\n"+OffreEnt.focusedPoste+"\n"+"Heure:"+time+"\n"+"Date:"+"\n"+strDate+"\n");
+            
                  ////////////////
 
                 
                 
              //   n.show();
-                AfficheInterview c = new AfficheInterview();
+                AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
               }
               else f.add(testdate);

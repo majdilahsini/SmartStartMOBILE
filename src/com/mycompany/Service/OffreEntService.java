@@ -15,6 +15,7 @@ import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.Entite.Interviews;
 import com.mycompany.Entite.OffreEnt;
+import com.mycompany.Entite.Session;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,16 +73,61 @@ public class OffreEntService {
 
     }
     
+    public ArrayList<OffreEnt> parseListOffreEntJson(String json) {
+
+        ArrayList<OffreEnt> listTasks = new ArrayList<>();
+
+        try {
+            JSONParser j = new JSONParser();
+            Map<String, Object> tasks = j.parseJSON(new CharArrayReader(json.toCharArray()));
+            List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+            for (Map<String, Object> obj : list) {
+                OffreEnt e = new OffreEnt();
+               /*  Map<String,Object> name= (Map<String,Object>) obj.get("idCondidat");
+                 Map<String,Object> namee= (Map<String,Object>) obj.get("idEntreprise");
+                 e.setNomEntreprise(namee.get("fullname").toString());
+*/
+                 //////////////////////////////////
+                 e.setNomCondidat(obj.get("username").toString());
+     
+
+                float id = Float.parseFloat(obj.get("offre_id").toString());
+
+                e.setOffre_id((int) id);
+                e.setPoste(obj.get("poste").toString());
+
+                e.setLettreMotivation(obj.get("lettre_motivation").toString());
+               /* e.setFullname(obj.get("offre").toString());*/
+
+                System.out.println(e);
+                
+                listTasks.add(e);
+
+            }
+
+        } catch (IOException ex) {
+        }
+        
+        /*
+            A ce niveau on a pu récupérer une liste des tâches à partir
+        de la base de données à travers un service web
+        
+        */
+        System.out.println(listTasks);
+        return listTasks;
+
+    }
+    
     ArrayList<OffreEnt> listTasks = new ArrayList<>();
     
     public ArrayList<OffreEnt> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev2/web/app_dev.php/interviews/interview/affichoffres_ent");  
+        con.setUrl("http://localhost/pidev2/web/app_dev.php/interviews/interview/affichoffres_ent/"+Session.getId());  
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 OffreEntService ser = new OffreEntService();
-                listTasks = ser.parseListTaskJson(new String(con.getResponseData()));
+                listTasks = ser.parseListOffreEntJson(new String(con.getResponseData()));
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);

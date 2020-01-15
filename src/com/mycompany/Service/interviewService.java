@@ -14,6 +14,7 @@ import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.Entite.Interviews;
+import com.mycompany.Entite.Session;
 import com.mycompany.Entite.Task;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,6 +81,58 @@ public ArrayList<Interviews> parseListTaskJson(String json) {
         return listTasks;
 
     }
+
+
+public ArrayList<Interviews> parseListInterviewJson(String json) {
+
+        ArrayList<Interviews> listTasks = new ArrayList<>();
+
+        try {
+            JSONParser j = new JSONParser();
+            Map<String, Object> tasks = j.parseJSON(new CharArrayReader(json.toCharArray()));
+            List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+            for (Map<String, Object> obj : list) {
+                Interviews e = new Interviews();
+               
+
+
+                 e.setFullname(obj.get("username").toString());
+                 
+
+    /*DateFormat f = new SimpleDateFormat("yyyy-MM-dd");*/
+
+                      e.setDate(obj.get("date_ent").toString());
+
+               
+                      float id = Float.parseFloat(obj.get("ref_ent").toString());
+                        float id2 = Float.parseFloat(obj.get("etat").toString());
+
+                e.setEtat((int) id2);
+
+                e.setRef_ent((int) id);
+                e.setPoste(obj.get("poste").toString());
+
+                e.setHeure_ent(obj.get("heure_ent").toString());
+               /* e.setFullname(obj.get("offre").toString());*/
+
+                System.out.println(e);
+                
+                listTasks.add(e);
+
+            }
+
+        } catch (IOException ex) {
+        }
+        
+        /*
+            A ce niveau on a pu récupérer une liste des tâches à partir
+        de la base de données à travers un service web
+        
+        */
+        System.out.println(listTasks);
+        return listTasks;
+
+    }
     
     ArrayList<Interviews> listTasks = new ArrayList<>();
     
@@ -97,6 +150,33 @@ public ArrayList<Interviews> parseListTaskJson(String json) {
         return listTasks;
 }
     
+    public ArrayList<Interviews> getList3(){       
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev2/web/app_dev.php/interviews/interview/afficheinterviewE/"+Session.getId());  
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                interviewService ser = new interviewService();
+                listTasks = ser.parseListInterviewJson(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listTasks;
+}
+    
+     public ArrayList<Interviews> getList4(){       
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev2/web/app_dev.php/interviews/interview/afficheinterviewCE/"+Session.getId());  
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                interviewService ser = new interviewService();
+                listTasks = ser.parseListInterviewJson(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listTasks;
+}
     
     public void SupprimerEntretien(int ref) {
         ConnectionRequest con = new ConnectionRequest();

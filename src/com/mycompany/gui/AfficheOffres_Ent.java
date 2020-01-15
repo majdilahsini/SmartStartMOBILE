@@ -107,7 +107,7 @@ cl.add(lettre_motivation);
             @Override
         
             public void actionPerformed(ActionEvent evt) {
-               AfficheInterview2 c = new AfficheInterview2();
+               AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
 
             }
@@ -138,7 +138,7 @@ cl.add(lettre_motivation);
 
                 h.SupprimerOffreEnt(contact.getOffre_id());
                    
-               AfficheInterview2 c = new AfficheInterview2();
+               AfficheInterview3 c = new AfficheInterview3();
             c.getF().show();
             }
                      }
@@ -159,7 +159,7 @@ cl.add(lettre_motivation);
                     te.addCommandToRightBar("< Retour", null ,new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-               AfficheInterview2 c = new AfficheInterview2();
+               AfficheInterview3 c = new AfficheInterview3();
         c.getF().show();
             }
         });
@@ -172,17 +172,23 @@ cl.add(lettre_motivation);
  fullname.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+     Container ccc = new Container(new BoxLayout(BoxLayout.X_AXIS));
+
      OffreEnt.focusedId=contact.getOffre_id();
       OffreEnt.focusedPoste=contact.getPoste();
 OffreEnt.focusedNomEntre=contact.getNomEntreprise();
 Dialog d = new Dialog("Option");
-d.setLayout(new BorderLayout());
+ccc.add(Supprimer);
+ccc.add(ajouter);
+ccc.add(retour2);
+d.add(ccc);
+/*d.setLayout(new BorderLayout());
 d.add(BorderLayout.EAST,ajouter);
 d.add(BorderLayout.WEST,Supprimer);
-d.add(BorderLayout.NORTH,retour2);
+d.add(BorderLayout.NORTH,retour2);*/
 
 
-d.show(f.getHeight() / 2, 0, 0, 0);
+d.show(2000, 0,0, 0);
 d.setDisposeWhenPointerOutOfBounds(true);
             }
             });
@@ -191,17 +197,19 @@ d.setDisposeWhenPointerOutOfBounds(true);
   fullnamee.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                     Container cccc = new Container(new BoxLayout(BoxLayout.X_AXIS));
+
        OffreEnt.focusedId=contact.getOffre_id();
  OffreEnt.focusedPoste=contact.getPoste();
 OffreEnt.focusedNomEntre=contact.getNomEntreprise();
 Dialog d = new Dialog("Option");
-d.setLayout(new BorderLayout());
-d.add(BorderLayout.EAST,ajouter);
-d.add(BorderLayout.WEST,Supprimer);
-d.add(BorderLayout.NORTH,retour2);
+cccc.add(Supprimer);
+cccc.add(ajouter);
+cccc.add(retour2);
+d.add(cccc);
 
-
-d.show(f.getHeight() / 2, 0, 0, 0);
+d.show(2000, 0,0, 0);
+//d.show(100 / 1, 0, 0, 0);
 d.setDisposeWhenPointerOutOfBounds(true);
             }
             });
