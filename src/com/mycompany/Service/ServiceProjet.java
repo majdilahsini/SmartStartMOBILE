@@ -29,12 +29,12 @@ public class ServiceProjet {
     
       public void ajoutinvest(int montant,long Numcartebancaire,int idP,int idU) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/ajoutinvestmo?montant=" + montant+"&Numcartebancaire="+Numcartebancaire+"&idU="+idU+"&idP="+idP;// création de l'URL
+        String Url = "http://localhost:82/pidev2/web/app_dev.php/project/projetuser/ajoutinvestmo?montant=" + montant+"&Numcartebancaire="+Numcartebancaire+"&idU="+idU+"&idP="+idP;// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
+           // System.out.println(str);//Affichage de la réponse serveur sur la console
 
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
@@ -107,7 +107,7 @@ public class ServiceProjet {
                 //---------------------------------------------
                 
                 
-                System.out.println(p);
+               // System.out.println(p);
                 
                 listTasks.add(p);
 
@@ -121,7 +121,7 @@ public class ServiceProjet {
         de la base de données à travers un service web
         
         */
-        System.out.println(listTasks);
+        //System.out.println(listTasks);
         return listTasks;
 
     }
@@ -133,13 +133,13 @@ public class ServiceProjet {
     
     public ArrayList<Projet> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost:82/piedv/web/app_dev.php/projetuser/indexall");  
+        con.setUrl("http://localhost:82/pidev2/web/app_dev.php/project/projetuser/affichM");  
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 ServiceProjet ser = new ServiceProjet();
                 String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
+           // System.out.println(str);//Affichage de la réponse serveur sur la console
                 try {
                     listProjets = ser.parseListProjetJson(new String(con.getResponseData()));
                 } catch (ParseException ex) {
@@ -154,7 +154,7 @@ public class ServiceProjet {
     
     public ArrayList<Projet> getList3(int id,int idEtat){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost:82/piedv/web/app_dev.php/projetuser/domainfiltre?id=" +id+"&idEtat="+idEtat);  
+        con.setUrl("http://localhost:82/pidev2/web/app_dev.php/project/project/projetuser/domainfiltre?id=" +id+"&idEtat="+idEtat);  
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -177,12 +177,12 @@ public class ServiceProjet {
      
     public void supprimerProjet(int idP) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/supprimerM?id="+ idP;// création de l'URL
+        String Url = "http://localhost:82/pidev2/web/app_dev.php/project/projetuser/supprimerM?id="+ idP;// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
+            //System.out.println(str);//Affichage de la réponse serveur sur la console
 
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
@@ -191,12 +191,12 @@ public class ServiceProjet {
     
    public void modifierProjet(Projet p) {
         ConnectionRequest con = new ConnectionRequest();// création d'une nouvelle demande de connexion
-        String Url = "http://localhost:82/piedv/web/app_dev.php/projetuser/modifierM?id="+p.getIdProjet()+"&nom=" + p.getNomprojet()+"&montant=" + p.getMontant()+"&dated="+p.getDateDebutProjet()+"&compte="+p.getCompteBancaire()+"&desc="+p.getDescriptionProjet()+"&vf="+p.getVotreFinance()+"&NT="+p.getNbreTeam()+"&cat="+p.getIdCategorie()+"&datef="+p.getDateFinProjet();// création de l'URL
+        String Url = "http://localhost:82/pidev2/web/app_dev.php/project/projetuser/modifierM?id="+p.getIdProjet()+"&nom=" + p.getNomprojet()+"&montant=" + p.getMontant()+"&dated="+p.getDateDebutProjet()+"&compte="+p.getCompteBancaire()+"&desc="+p.getDescriptionProjet()+"&vf="+p.getVotreFinance()+"&NT="+p.getNbreTeam()+"&cat="+p.getIdCategorie()+"&datef="+p.getDateFinProjet();// création de l'URL
         con.setUrl(Url);// Insertion de l'URL de notre demande de connexion
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());//Récupération de la réponse du serveur
-            System.out.println(str);//Affichage de la réponse serveur sur la console
+           // System.out.println(str);//Affichage de la réponse serveur sur la console
 
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
