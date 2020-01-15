@@ -15,6 +15,8 @@ public class Application {
     private int offre_id;
     private int user_id;
     private double match;
+    private int etat;
+    
 
     public double getMatch() {
         return match;
@@ -55,10 +57,11 @@ public class Application {
         this.user_id = user_id;
     }
 
-    public Application(int user_id, int offre_id, double match) {
+    public Application(int user_id, int offre_id, double match, int etat) {
         this.user_id = user_id;
         this.offre_id = offre_id;
         this.match = match;
+        this.etat = etat;
     }
 
     

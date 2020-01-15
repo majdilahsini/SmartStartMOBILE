@@ -37,6 +37,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.Entite.Session;
 import com.mycompany.Entite.users;
 import com.mycompany.Service.UsersService;
 /**
@@ -48,6 +49,7 @@ public class SignInForm extends Form {
 
     public SignInForm(Resources res) {
         
+                
         this.setLayout(new FlowLayout(CENTER, CENTER));
         
         Container c = new Container();
@@ -69,29 +71,25 @@ public class SignInForm extends Form {
         doneHaveAnAccount.getAllStyles().setFgColor(0xEFEFF4);
         signUp.getAllStyles().setFgColor(0xEFEFF4);
         //signIn.getAllStyles().setMargin(20, 20, 0 ,0);
-        
-        String a=username.getText();
-        String b=password.getText();
-        UsersService t=new UsersService();
-        signIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                 if( t.verifielogin ("fartasa","firo") == 1 ){
-            Dialog.show("ok", "ok", "ok", "ok");
-                    
-                    }
-                 else 
-                         Dialog.show("no", "no", "no", "no");
-            
-            }
-        });
-        
         c.add(username);
         c.add(password);
         c.add(signIn);
         c.add(signUp);
         
         this.add(c);
+        String a=username.getText();
+        String b=password.getText();
+        UsersService t=new UsersService();
+        signIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                 t.verifielogin (username.getText(),password.getText()) ;
+                
+            
+            }
+        });
+        
+        
        
     }
     

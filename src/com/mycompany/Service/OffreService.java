@@ -13,6 +13,8 @@ import com.codename1.io.NetworkManager;
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
+import com.mycompany.Entite.Application;
+import com.mycompany.Entite.Inscription;
 import com.mycompany.Entite.Offre;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,5 +115,21 @@ public class OffreService {
         NetworkManager.getInstance().addToQueueAndWait(con);
         return score;
     } 
+    
+    public void PostulerOffre(Application a){
+         ConnectionRequest con = new ConnectionRequest();
+         String url="http://localhost/pidev/web/app_dev.php/offre/api/postuleroffre/"+a.getOffre_id()+"/"+a.getMatch()+"/"+a.getUser_id();
+                     
+        con.setUrl(url);
+        con.setPost(true);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    }
+
+ 
     
 }

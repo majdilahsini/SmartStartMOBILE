@@ -5,9 +5,11 @@
  */
 package com.mycompany.gui;
 
+import com.codename1.messaging.Message;
 import com.codename1.progress.ArcProgress;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
@@ -21,6 +23,7 @@ import com.codename1.ui.plaf.Style;
 import static com.codename1.ui.plaf.Style.BACKGROUND_NONE;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.mycompany.Entite.Application;
 import com.mycompany.Entite.Offre;
 import com.mycompany.Service.OffreService;
 
@@ -119,7 +122,23 @@ public class ConsulterOffre extends Form {
         this.add(seperator);
         this.add(scroll);
         
-        this.add(new Button("Postuler!"));
+        Button postuler = new Button("Postuler!");
+        
+        postuler.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                
+                OffreService o = new OffreService();
+                Application a = new Application(14, offre.getId(), Integer.parseInt(o.getscore(offre.getId(), 14)), 0);
+                
+                o.PostulerOffre(a);
+   
+            }
+        });
+        
+        this.add(postuler);
+        
+        
         
         Toolbar toolbar = new Toolbar();
         toolbar.ToolBarInstall(this, null);

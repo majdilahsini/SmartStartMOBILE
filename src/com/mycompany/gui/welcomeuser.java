@@ -32,23 +32,25 @@ public class welcomeuser {
           SpanLabel lb;
           Container c1;
                Resources theme;
-               public welcomeuser(){
-     theme = UIManager.initFirstTheme("/theme");
-    f = new Form("Welcome user",new FlowLayout(CENTER, CENTER));
-            Container c2 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+               public welcomeuser(String username,int id){
+                   
+            theme = UIManager.initFirstTheme("/theme");
+            f = new Form(username,new FlowLayout(CENTER, CENTER));
+                    Container c2 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 
-      try {
-                enc = EncodedImage.create("/logo.png");
-            } catch (IOException ex) {
-                
-            }
-                   ImageViewer img = new ImageViewer(enc);
-      c2.add(enc);
-      Label a = new Label("Bienvenue a notre application");
-      c2.add(a);
-      f.add(c2);
-      Toolbar t = new Toolbar();       
-       t.ToolBarInstall(f, theme);
+              try {
+                        enc = EncodedImage.create("/logo.png");
+                    } catch (IOException ex) {
+
+                    }
+                           ImageViewer img = new ImageViewer(enc);
+              c2.add(enc);
+              Label a = new Label("Bienvenue a notre application"+id);
+              c2.add(a);
+              f.add(c2);
+              Toolbar t = new Toolbar();       
+               t.ToolBarInstall(f, theme);
+               
               }
                public Form getF(){
     return f;

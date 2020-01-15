@@ -16,9 +16,14 @@ import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.location.GeofenceManager.Listener;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.plaf.UIManager;
 import com.mycompany.Entite.Formation;
+import com.mycompany.Entite.Session;
 import com.mycompany.Entite.users;
+import com.mycompany.gui.welcomeentreprise;
+import com.mycompany.gui.welcomeuser;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
@@ -35,38 +40,31 @@ import java.util.Map;
  */
 
  public class UsersService {
-     int a;
-     String s;
+int a;
+    
         public ArrayList<users> parseListTaskJson(String json) {
                     ArrayList<users> listUsers = new ArrayList<>();
                       try {
-            JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
+            JSONParser j = new JSONParser();
                         Map<String, Object> Users= j.parseJSON(new CharArrayReader(json.toCharArray()));
- /* Ici on récupère l'objet contenant notre liste dans une liste 
-            d'objets json List<MAP<String,Object>> ou chaque Map est une tâche                
-            */
+
              List<Map<String, Object>> list = (List<Map<String, Object>>) Users.get("root");
-                         //Parcourir la liste des tâches Json
+                  
                 for (Map<String, Object> obj : list) {
-                //Création des tâches et récupération de leurs données
+               
                 users p = new users();
-                Map<String, Object> username = (Map<String, Object>) obj.get("username");
-                Map<String, Object> password = (Map<String, Object>) obj.get("password");
-                Map<String, Object> datedebl = (Map<String, Object>) obj.get("roles");
-                Map<String, Object> fullname = (Map<String, Object>) obj.get("fullname");
-                Map<String, Object> adresse = (Map<String, Object>) obj.get("adresse");
+               
               float id= Float.parseFloat(obj.get("id").toString());
                 p.setId((int) id);
                 
-               p.setUsername(Users.get("username").toString());
-
-                p.setPassword(Users.get("password").toString());
+               p.setUsername(obj.get("username").toString());
+                p.setEmail(obj.get("email").toString());
+                p.setPassword(obj.get("password").toString());
                 p.setRoles(obj.get("roles").toString());
                 p.setFullname(obj.get("fullname").toString());
                 p.setAddress(obj.get("adresse").toString());
-                float tel = Float.parseFloat(obj.get("tel").toString());
-               p.setTel((int) tel);
-                System.out.println(p);
+                p.setTel(obj.get("tel").toString());
+                /*System.out.println(p);*/
                 
                 listUsers.add(p);
 
@@ -78,14 +76,14 @@ import java.util.Map;
         de la base de données à travers un service web
         
         */
-        System.out.println(listUsers);
+ 
         return listUsers;
 
     }
         ArrayList<users> listUsers = new ArrayList<>();
         public ArrayList<users> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/smartStartWeb/web/app_dev.php/alluser");  
+        con.setUrl("http://localhost/pidev/web/app_dev.php/alluser");  
         con.setPost(false);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -101,7 +99,7 @@ import java.util.Map;
         
         public void ModifierUser(users f){
             ConnectionRequest con = new ConnectionRequest();
-            String Url ="http://localhost/smartStartWeb/web/app_dev.php/update/"+f.getId()+"/"+
+            String Url ="http://localhost/pidev/web/app_dev.php/update/"+f.getId()+"/"+
             f.getUsername()+"/"+f.getEmail()+"/"+"1"+"/"+ f.getPassword()+"/"+f.getRoles()+"/"+f.getFullname()+"/"+f.getAddress()+"/"+f.getTel();
             
             con.setUrl(Url);
@@ -125,24 +123,27 @@ import java.util.Map;
             return null;
         }
 public users RecupererUser(String json) {
+    
         users user = new users();
+      
 
         try {
             JSONParser j = new JSONParser();
-            Map<String, Object> users;
-            users = j.parseJSON(new CharArrayReader(json.toCharArray()));
-            float id = Float.parseFloat(users.get("id").toString());
-            user.setId((int) id);
-            user.setUsername(users.get("username").toString());
-            user.setEmail(users.get("email").toString());
-            user.setPassword(users.get("password").toString());
-            user.setRoles(users.get("roles").toString());
-            user.setFullname(users.get("fullname").toString());
-            user.setAddress(users.get("adresse").toString());
-            float tel = Float.parseFloat(users.get("tel").toString());
-            user.setTel((int) tel);
-               
- System.out.println(user);
+            Map<String, Object> obj;
+            obj = j.parseJSON(new CharArrayReader(json.toCharArray()));
+             System.out.println(obj);
+            
+           int userId = Integer.valueOf(obj.get("id").toString().substring(0, obj.get("id").toString().indexOf('.')));
+            user.setId(userId);
+            user.setPassword(obj.get("password").toString());
+            user.setEmail(obj.get("email").toString());
+//            user.setAdresse(users.get("adresse").toString());
+            user.setRoles(obj.get("roles").toString());
+            user.setUsername(obj.get("username").toString());
+           
+            
+               return user;
+
             
         } catch (IOException ex) {
         }
@@ -150,30 +151,41 @@ public users RecupererUser(String json) {
         return user;
 
     }
-  public int verifielogin(String e,String b) {
-       a = 0;
-       
+  public void verifielogin(String e,String b) {
+       a=0;
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://localhost/pidev/web/app_dev.php/finduser1/"+e+"/"+b);
         con.setHttpMethod("GET");
+             con.setPost(false);
+
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-               
-                byte[] data = (byte[]) con.getResponseData();
-                 s = new String(data);
-                 
-                System.out.println(s);
                 
-                if (s!= null) {
-                    a =1;
-                    
+               byte[] data = (byte[]) con.getResponseData();
+                 String s = new String(data);
+                if (!(parseListTaskJson(s)).isEmpty()) {
+                    users user=parseListTaskJson(s).get(0);
+                 String z="[ROLE_USER]";
+                 String h="["+"ROLE_ENTREPRISE"+", ROLE_USER"+"]";
+                 Session.setId(user.getId());
+                 int id=user.getId();
+                 String username=user.getUsername();
+                     if(user.getRoles().equals(z)){
+                 welcomeuser a=new welcomeuser(username,id);
+                 a.getF().show();}
+                 else if(user.getRoles().equals(h)){
+                     welcomeentreprise c=new welcomeentreprise();
+                     c.getF().show();
+                 }
                 }
+                
+                else if ((parseListTaskJson(s)).isEmpty()) Dialog.show("erreur", "verifier vos parametres", "ok", "cancel");
             }
         });
          NetworkManager.getInstance().addToQueueAndWait(con);
-         System.out.println(a);
-        return a;
+         
+      
         
        
  }

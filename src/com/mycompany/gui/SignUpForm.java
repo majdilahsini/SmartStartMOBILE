@@ -101,10 +101,10 @@ TextField username = new TextField("", "Username", 20, TextField.ANY);
            
             public void actionPerformed(ActionEvent evt) {
                 ConnectionRequest req = new ConnectionRequest();
-                req.setUrl("http://localhost/smartStartWeb/web/app_dev.php/adduser?username="+username.getText()+"&email="+email.getText()+"&enabled=1&password="+password.getText()+
+                req.setUrl("http://localhost/pidev/web/app_dev.php/adduser?username="+username.getText()+"&email="+email.getText()+"&enabled=1&password="+password.getText()+
                         "&roles="+roleres+"+&fullname="+fullname.getText()+"&adresse="+adresse.getText()+"&tel="+tel.getText()
                         );
-                
+                System.out.println(req.getUrl());
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
                     @Override
                     public void actionPerformed(NetworkEvent evt) {

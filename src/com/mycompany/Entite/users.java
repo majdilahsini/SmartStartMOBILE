@@ -42,7 +42,7 @@ public class users {
     private String fullname;
     private String address;
 
-    private int tel;
+    private String tel;
 
     public users() {
     }
@@ -55,7 +55,7 @@ public class users {
         this.roles = roles;
     }
 
-    public users(Integer id, String username, String usernameCanonical, String email, String emailCanonical, boolean enabled, String salt, String password, Date lastLogin, String confirmationToken, Date password_Requested_At, String roles, String fullname, String address, int tel) {
+    public users(Integer id, String username, String usernameCanonical, String email, String emailCanonical, boolean enabled, String salt, String password, Date lastLogin, String confirmationToken, Date password_Requested_At, String roles, String fullname, String address, String tel) {
         this.id = id;
         this.username = username;
         this.usernameCanonical = usernameCanonical;
@@ -80,7 +80,7 @@ public class users {
         this.roles = roles;
     }
 
-    public users(String username, String email, boolean enabled, String password, String roles, String fullname, String address, int tel) {
+    public users(String username, String email, boolean enabled, String password, String roles, String fullname, String address, String tel) {
         this.username = username;
         this.email = email;
         this.enabled = enabled;
@@ -91,7 +91,7 @@ public class users {
         this.tel = tel;
     }
 
-    public users(Integer id, String username, String email, boolean enabled, String password, String roles, String fullname, String address, int tel) {
+    public users(Integer id, String username, String email, boolean enabled, String password, String roles, String fullname, String address, String tel) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -103,7 +103,7 @@ public class users {
         this.tel = tel;
     }
 
-    public users(Integer id, String username, String email, String password, String roles, String fullname, String address, int tel) {
+    public users(Integer id, String username, String email, String password, String roles, String fullname, String address, String tel) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -227,34 +227,15 @@ public class users {
         this.address = address;
     }
 
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.username);
-        hash = 79 * hash + Objects.hashCode(this.usernameCanonical);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.emailCanonical);
-        hash = 79 * hash + (this.enabled ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.salt);
-        hash = 79 * hash + Objects.hashCode(this.password);
-        hash = 79 * hash + Objects.hashCode(this.lastLogin);
-        hash = 79 * hash + Objects.hashCode(this.confirmationToken);
-        hash = 79 * hash + Objects.hashCode(this.password_Requested_At);
-        hash = 79 * hash + Objects.hashCode(this.roles);
-        hash = 79 * hash + Objects.hashCode(this.fullname);
-        hash = 79 * hash + Objects.hashCode(this.address);
-        hash = 79 * hash + this.tel;
-        return hash;
-    }
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -315,13 +296,16 @@ public class users {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "users{" + "id=" + id + ", username=" + username + ", usernameCanonical=" + usernameCanonical + ", email=" + email + ", emailCanonical=" + emailCanonical + ", enabled=" + enabled + ", salt=" + salt + ", password=" + password + ", lastLogin=" + lastLogin + ", confirmationToken=" + confirmationToken + ", password_Requested_At=" + password_Requested_At + ", roles=" + roles + ", fullname=" + fullname + ", address=" + address + ", tel=" + tel + '}';
+    }
+
+   
   
     
     
-         @Override
-    public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
-   }
     
     
     
