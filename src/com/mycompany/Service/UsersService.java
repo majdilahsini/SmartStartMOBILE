@@ -165,7 +165,7 @@ public users RecupererUser(String json) {
                byte[] data = (byte[]) con.getResponseData();
                  String s = new String(data);
                 if (!(parseListTaskJson(s)).isEmpty()) {
-                    users user=parseListTaskJson(s).get(0);
+                 users user=parseListTaskJson(s).get(0);
                  String z="[ROLE_USER]";
                  String h="["+"ROLE_ENTREPRISE"+", ROLE_USER"+"]";
                  Session.setId(user.getId());

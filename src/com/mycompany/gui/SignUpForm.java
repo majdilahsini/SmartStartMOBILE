@@ -19,6 +19,7 @@
 
 package com.mycompany.gui;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.codename1.components.FloatingHint;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkEvent;
@@ -101,6 +102,8 @@ TextField username = new TextField("", "Username", 20, TextField.ANY);
            
             public void actionPerformed(ActionEvent evt) {
                 ConnectionRequest req = new ConnectionRequest();
+                
+                
                 req.setUrl("http://localhost/pidev/web/app_dev.php/adduser?username="+username.getText()+"&email="+email.getText()+"&enabled=1&password="+password.getText()+
                         "&roles="+roleres+"+&fullname="+fullname.getText()+"&adresse="+adresse.getText()+"&tel="+tel.getText()
                         );
