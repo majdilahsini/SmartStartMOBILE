@@ -5,19 +5,10 @@
  */
 package com.mycompany.gui;
 
-import com.codename1.components.ImageViewer;
-import com.codename1.components.InfiniteProgress;
-import com.codename1.components.SpanLabel;
-import com.codename1.ui.Button;
-import static com.codename1.ui.CN.FACE_PROPORTIONAL;
-import com.codename1.ui.Component;
 import com.codename1.ui.Container;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.Font;
 import com.codename1.ui.Form;
-import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.geom.Dimension;
@@ -27,43 +18,27 @@ import com.codename1.ui.plaf.Border;
 import static com.codename1.ui.plaf.Style.BACKGROUND_NONE;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.mycompany.Entite.Formation;
 import com.mycompany.Entite.Offre;
-import com.mycompany.Service.FormationService;
+import com.mycompany.Entite.Session;
 import com.mycompany.Service.OffreService;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  *
- * @author lenovo
+ * @author Sadbo
  */
-public class AffichageOffre extends Form{
-    
-     Button b;
-     Resources theme;
-      
-     public AffichageOffre() {
-
+public class mescandidateures extends Form{
+ 
+    public mescandidateures() {
+        
        Container c = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        
+       Resources theme = UIManager.initFirstTheme("/theme");
        
-       /*Button mes = new Button("mes candidateurs");
-       
-       mes.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent evt) {
-               new mescandidateures().show();
-           }
-       }) ;*/
-         
-         
-       //this.add(mes);
-
-       theme = UIManager.initFirstTheme("/theme");
        this.setLayout(BoxLayout.y());
        
        OffreService os = new OffreService();
-       ArrayList<Offre> offres = os.getList2();
+       ArrayList<Offre> offres = os.mescandidatures(Session.getId());
        
        for(Offre o : offres){
            
@@ -147,7 +122,7 @@ public class AffichageOffre extends Form{
        });
        
        this.getToolbar().setTitleComponent(FlowLayout.encloseCenterMiddle(
-                                                new Label("Listes des offres", "Title"),
+                                                new Label("Mes Candidatures", "Title"),
                                                 new Label(""+offres.size(), "InboxNumber")
                                         )
         );
@@ -156,4 +131,10 @@ public class AffichageOffre extends Form{
        Toolbar t = new Toolbar();       
        t.ToolBarInstall(this, theme);       
      }
- }
+        
+        
+    }
+    
+
+    
+

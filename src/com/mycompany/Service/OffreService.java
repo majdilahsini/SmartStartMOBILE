@@ -102,6 +102,20 @@ public class OffreService {
         NetworkManager.getInstance().addToQueueAndWait(con);
         return listOffres;
     }
+        
+       public ArrayList<Offre> mescandidatures(int id){       
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev/web/app_dev.php/offre/api/mescandidatures/"+id);  
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                OffreService os = new OffreService();
+                listOffres = os.parseListTaskJson(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listOffres;
+    }
 
     String score;
     

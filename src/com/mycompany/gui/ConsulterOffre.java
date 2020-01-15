@@ -25,6 +25,8 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.mycompany.Entite.Application;
 import com.mycompany.Entite.Offre;
+import com.mycompany.Entite.Session;
+import com.mycompany.Entite.TwilioSMS;
 import com.mycompany.Service.OffreService;
 
 /**
@@ -93,14 +95,14 @@ public class ConsulterOffre extends Form {
         
         OffreService os  = new OffreService();
         Label score_text = new Label("Score", "HugeDarkLabel");
-        Label score = new Label(""+os.getscore(offre.getId(), 14), "HugeDarkLabel");
+        Label score = new Label(""+os.getscore(offre.getId(), Session.getId()), "HugeDarkLabel");
         score.getAllStyles().setFgColor(0xE87A67);
         Label per = new Label("%", "HugeDarkLabel");
         
         Label darkRect = new Label(res.getImage("dark-rect.png"), "StatsLabel");
         Label active = new Label("ACTIVE", "StatsLabel");
         ArcProgress ap = new ArcProgress();
-        ap.setProgress(Integer.parseInt(os.getscore(offre.getId(), 14)));
+        ap.setProgress(Integer.parseInt(os.getscore(offre.getId(), Session.getId())));
         ap.setRenderPercentageOnTop(false);
         
         Container box = BoxLayout.encloseY(
@@ -124,19 +126,33 @@ public class ConsulterOffre extends Form {
         
         Button postuler = new Button("Postuler!");
         
+        Label message = new Label("Vous avez postuler !");
+        
+        message.setVisible(false);
+        message.setHidden(true);
+        
         postuler.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 
                 OffreService o = new OffreService();
-                Application a = new Application(14, offre.getId(), Integer.parseInt(o.getscore(offre.getId(), 14)), 0);
+                Application a = new Application(Session.getId(), offre.getId(), Integer.parseInt(o.getscore(offre.getId(), Session.getId())), 0);
                 
                 o.PostulerOffre(a);
-   
-            }
+                
+                postuler.setVisible(false);
+                postuler.setHidden(true);
+                
+                message.setVisible(true);
+                message.setHidden(false);
+                
+                TwilioSMS sms=new TwilioSMS("ACaa1a4f312d916842b47cd283604a4b74","1392160125d5296e5eac8e2704fae690","+17853290296");
+                sms.sendSmsAsync("+21652003948"," Vous avez bien postuler à l'offre"+ offre.getTitre()+"");
+             }
         });
         
         this.add(postuler);
+        this.add(message);
         
         
         
