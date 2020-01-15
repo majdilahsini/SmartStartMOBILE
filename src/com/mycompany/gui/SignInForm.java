@@ -20,6 +20,7 @@
 package com.mycompany.gui;
 
 import com.codename1.components.FloatingHint;
+import com.codename1.components.ImageViewer;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
@@ -47,9 +48,14 @@ public class SignInForm extends Form {
 
     public SignInForm(Resources res) {
         
-        super(new BorderLayout());
+        this.setLayout(new FlowLayout(CENTER, CENTER));
         
-      
+        Container c = new Container();
+        c.setLayout(BoxLayout.y());
+        
+        ImageViewer logo = new ImageViewer(res.getImage("logo.png"));
+        
+        c.add(logo);
         
         TextField username = new TextField("", "Username", 20, TextField.ANY);
         TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
@@ -57,15 +63,16 @@ public class SignInForm extends Form {
         Button signIn = new Button("Sign In");
         Button signUp = new Button("Sign Up");
         signUp.addActionListener(e -> new SignUpForm(res).show());
-        signUp.setUIID("Link");
+        
+        //signUp.setUIID("Link");
         Label doneHaveAnAccount = new Label("Don't have an account?","HugeDarkLabel");
         doneHaveAnAccount.getAllStyles().setFgColor(0xEFEFF4);
         signUp.getAllStyles().setFgColor(0xEFEFF4);
+        //signIn.getAllStyles().setMargin(20, 20, 0 ,0);
         
-       
         String a=username.getText();
-       String b=password.getText();
-       UsersService t=new UsersService();
+        String b=password.getText();
+        UsersService t=new UsersService();
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -78,6 +85,13 @@ public class SignInForm extends Form {
             
             }
         });
+        
+        c.add(username);
+        c.add(password);
+        c.add(signIn);
+        c.add(signUp);
+        
+        this.add(c);
        
     }
     

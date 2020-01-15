@@ -8,6 +8,7 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
+import com.mycompany.gui.SignInForm;
 import com.mycompany.gui.welcomeentreprise;
 import com.mycompany.gui.welcomeuser;
 
@@ -49,8 +50,8 @@ public class Smartmain {
             return;
         }
         
-        welcomeuser A = new welcomeuser();
-        A.getF().show();
+        SignInForm A = new SignInForm(theme);
+        A.show();
         //
     }
 

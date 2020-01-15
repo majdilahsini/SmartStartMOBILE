@@ -154,7 +154,7 @@ public users RecupererUser(String json) {
        a = 0;
        
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/smartStartWeb/web/app_dev.php/finduser1/"+e+"/"+b);
+        con.setUrl("http://localhost/pidev/web/app_dev.php/finduser1/"+e+"/"+b);
         con.setHttpMethod("GET");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
