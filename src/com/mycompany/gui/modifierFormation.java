@@ -6,9 +6,11 @@
 package com.mycompany.gui;
 
 import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Display;
+import com.codename1.ui.Font;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
@@ -44,6 +46,7 @@ public class modifierFormation {
         Picker datePicker2 = new Picker();
         datePicker2.setType(Display.PICKER_TYPE_DATE);
         
+       
         Label l5 = new Label("Date Fin:");
         TextField t5 = new TextField();
         Label l6 = new Label("Prix:");
@@ -70,8 +73,25 @@ public class modifierFormation {
         t1.setText(s1.getNom());
         t2.setText(s1.getDescription());
         t3.setText(String.valueOf(s1.getDuree()));
-        t4.setText(s1.getDate_debut());
-        t5.setText(s1.getDate_fin());
+        
+        Date t;
+    try {
+        t = getdare1(s1);
+        datePicker1.setDate(t);
+
+    } catch (ParseException ex) {
+    }
+    Date a;
+    try {
+        a = getdare2(s1);
+        datePicker2.setDate(a);
+
+    } catch (ParseException ex) {
+    }
+       // datePicker1.setText(s1.getDate_debut());
+             //   datePicker2.setText(s1.getDate_fin());
+       // t4.setText(s1.getDate_debut());
+       // t5.setText(s1.getDate_fin());
         t6.setText(String.valueOf(s1.getPrix()));
         t7.setText(s1.getAdresse());
         t8.setText(String.valueOf(s1.getContact()));
@@ -83,20 +103,32 @@ public class modifierFormation {
         btnmodif.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                 Label testdate = new Label("entrer une date valide");
+        testdate.getAllStyles().setFgColor(0xE35F5A);
+                testdate.getAllStyles().setMargin(0, 0, 1, 0);
+                testdate.getAllStyles().setPadding(0, 0, 1, 0);
+                testdate.getAllStyles().setFont(Font.createTrueTypeFont("native:MainThin", (float) 4));
                 Date date1 = datePicker1.getDate();
                 Date date2 = datePicker2.getDate();
                 DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
                                 DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-                String strDate1 = dateFormat1.format(date1);
-                                String strDate2 = dateFormat1.format(date2);
+                                                                DateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd");
 
+                String strDate1 = dateFormat1.format(date1);
+                 String today = dateFormat3.format(new Date());
+
+                                String strDate2 = dateFormat1.format(date2);
+               
                 Formation i = new Formation(Formation.focusedId,t1.getText(),t2.getText(),Integer.parseInt(t3.getText()),strDate1
                 ,strDate2,t7.getText(),Double.parseDouble(t6.getText()),Integer.parseInt(t8.getText()),t9.getText());
                 FormationService is = new FormationService();
+                 if ((strDate2.compareTo(strDate1)>0)){
                 is.ModifierFormation(i);
                 
                 AffichageFormation c = new AffichageFormation();
                 c.getF().show();
+            }
+                else{f.add(testdate);}
             }
             }
         );
@@ -117,7 +149,18 @@ public class modifierFormation {
         
         
     }
-    
+    public Date getdare1(Formation s1) throws ParseException{
+            DateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+        Date datet = formatD.parse(s1.getDate_debut());
+        
+        return datet;
+        }
+     public Date getdare2(Formation s1) throws ParseException{
+            DateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+        Date datet = formatD.parse(s1.getDate_fin());
+        
+        return datet;
+        }
  public void affichermodif(int ref){
      
  }

@@ -24,6 +24,18 @@ public class Formation {
     private int domaine_id ;
      public static int focusedId ;
           public static String focusedIdd ;
+                    public static String focusedIdde ;
+                              public static int focusedIdu ;
+                                        public static String focusedIdded ;
+                                                                                public static int focusedIdref ;
+
+public static String focusedIddfd ;
+public static String focusedIddad ;
+public static double focusedIddp ;
+public static int focusedIddc ;
+public static String focusedIddem ;
+
+
           public static int focusedIddd ;
                     public static int focusedIduser ;
 
@@ -40,6 +52,8 @@ public class Formation {
     private String email ;
     private String image ;
   private int Nbres_inscrits ;
+  private int Nbres_initiale ;
+  private int etat ;
         private String nomentreprise ;
        private String nomdomaine ;
 
@@ -66,6 +80,15 @@ public class Formation {
         this.adresse = adresse;
     }
 
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
+
+    
     public int getRef() {
         return ref;
     }
@@ -88,14 +111,6 @@ public class Formation {
 
     public void setDomaine_id(int domaine_id) {
         this.domaine_id = domaine_id;
-    }
-
-    public static int getFocusedId() {
-        return focusedId;
-    }
-
-    public static void setFocusedId(int focusedId) {
-        Formation.focusedId = focusedId;
     }
 
     public String getNom() {
@@ -186,6 +201,14 @@ public class Formation {
         this.Nbres_inscrits = Nbres_inscrits;
     }
 
+    public int getNbres_initiale() {
+        return Nbres_initiale;
+    }
+
+    public void setNbres_initiale(int Nbres_initiale) {
+        this.Nbres_initiale = Nbres_initiale;
+    }
+
     public String getNomentreprise() {
         return nomentreprise;
     }
@@ -201,6 +224,8 @@ public class Formation {
     public void setNomdomaine(String nomdomaine) {
         this.nomdomaine = nomdomaine;
     }
+
+    
 
     
 

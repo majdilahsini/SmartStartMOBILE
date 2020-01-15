@@ -14,9 +14,20 @@ public class Inscription {
     private int user_id ;
     private int formation_ref ;
     private String lettre_motivation ;
+    private String nomformation ;
+    private String datedebut;
+    private String datefin;
+    private String nomdomaine;
+    private String nomentreprise ;
+        private String image ;
+
     private String specialite;
     private String ecole;
-
+    private int etat ;
+    private String date_creation ;
+        public static int focusedIdetat ;
+                    public static int focusedIdUser  ;
+    
     public Inscription() {
     }
 
@@ -35,6 +46,70 @@ public class Inscription {
         this.lettre_motivation = lettre_motivation;
         this.specialite = specialite;
         this.ecole = ecole;
+    }
+
+    public String getNomformation() {
+        return nomformation;
+    }
+
+    public void setNomformation(String nomformation) {
+        this.nomformation = nomformation;
+    }
+
+    public String getDatedebut() {
+        return datedebut;
+    }
+
+    public void setDatedebut(String datedebut) {
+        this.datedebut = datedebut;
+    }
+
+    public String getDatefin() {
+        return datefin;
+    }
+
+    public void setDatefin(String datefin) {
+        this.datefin = datefin;
+    }
+
+    public String getNomdomaine() {
+        return nomdomaine;
+    }
+
+    public void setNomdomaine(String nomdomaine) {
+        this.nomdomaine = nomdomaine;
+    }
+
+    public String getNomentreprise() {
+        return nomentreprise;
+    }
+
+    public void setNomentreprise(String nomentreprise) {
+        this.nomentreprise = nomentreprise;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDate_creation() {
+        return date_creation;
+    }
+
+    public void setDate_creation(String date_creation) {
+        this.date_creation = date_creation;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
     
 
