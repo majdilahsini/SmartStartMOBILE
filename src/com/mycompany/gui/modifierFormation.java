@@ -6,6 +6,7 @@
 package com.mycompany.gui;
 
 import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Display;
@@ -72,8 +73,23 @@ public class modifierFormation {
         t1.setText(s1.getNom());
         t2.setText(s1.getDescription());
         t3.setText(String.valueOf(s1.getDuree()));
-        datePicker1.setText(s1.getDate_debut());
-                datePicker2.setText(s1.getDate_fin());
+        
+        Date t;
+    try {
+        t = getdare1(s1);
+        datePicker1.setDate(t);
+
+    } catch (ParseException ex) {
+    }
+    Date a;
+    try {
+        a = getdare2(s1);
+        datePicker2.setDate(a);
+
+    } catch (ParseException ex) {
+    }
+       // datePicker1.setText(s1.getDate_debut());
+             //   datePicker2.setText(s1.getDate_fin());
        // t4.setText(s1.getDate_debut());
        // t5.setText(s1.getDate_fin());
         t6.setText(String.valueOf(s1.getPrix()));
@@ -133,7 +149,18 @@ public class modifierFormation {
         
         
     }
-    
+    public Date getdare1(Formation s1) throws ParseException{
+            DateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+        Date datet = formatD.parse(s1.getDate_debut());
+        
+        return datet;
+        }
+     public Date getdare2(Formation s1) throws ParseException{
+            DateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+        Date datet = formatD.parse(s1.getDate_fin());
+        
+        return datet;
+        }
  public void affichermodif(int ref){
      
  }
