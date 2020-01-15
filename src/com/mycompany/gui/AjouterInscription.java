@@ -5,6 +5,8 @@
  */
 package com.mycompany.gui;
 
+import com.codename1.io.rest.Response;
+import com.codename1.io.rest.Rest;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
@@ -16,9 +18,11 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.util.Base64;
 import com.mycompany.Entite.Formation;
 import com.mycompany.Entite.Inscription;
 import com.mycompany.Service.FormationService;
+import java.util.Map;
 
 /**
  *
@@ -33,10 +37,10 @@ public class AjouterInscription {
                    String label = ("inscription: "+Formation.focusedIdd);
 f.setTitle(label);
                                 Container c = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-                                Label user = new Label("user");
-                                TextField userentry=new TextField();
-                                c.add(user);
-                                 c.add(userentry);
+                             //   Label user = new Label("user");
+                            //    TextField userentry=new TextField();
+                            //    c.add(user);
+                             //    c.add(userentry);
                                 Label specialité = new Label("specialité/service");
                                 TextField specialitéentry=new TextField();
                                  c.add(specialité);
@@ -70,9 +74,19 @@ f.setTitle(label);
                          confirmer.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        Inscription i = new Inscription(Integer.parseInt(userentry.getText()),Formation.focusedId,lettreentry.getText(),specialitéentry.getText(),ecolenetry.getText());
+                        Inscription i = new Inscription(2,Formation.focusedId,lettreentry.getText(),specialitéentry.getText(),ecolenetry.getText());
                         FormationService is = new FormationService();
                         is.AjouterInscription(i);
+                        String accountSID = "ACfbd723c923bc8c7419bd29bbdb1ee1b1";
+String authToken = "d31e18abb4d712599f4eca725b3233b8";
+String fromPhone = "+12482366312";
+                 Response<Map> result = Rest.post("https://api.twilio.com/2010-04-01/Accounts/" + accountSID + "/Messages.json").
+        queryParam("To","+21644341990").
+        queryParam("From", fromPhone).
+        queryParam("Body", "Félicitation,vous étes inscrit au formation "+Formation.focusedIdd+"\n"+"Description:"+"\n"+Formation.focusedIdde+"\n"+"Date Debut:"+Formation.focusedIdded+"\n"+"Date Fin:"+"\n"+Formation.focusedIddfd+"\n"+"Adresse:"+"\n"+Formation.focusedIddad+"\n"+
+        "Prix:"+Formation.focusedIddp+" dt"+"\n"+"Duree: "+Formation.focusedIdu+" heures"+"\n"+"email:"+Formation.focusedIddem+"\n"+"tel: "+Formation.focusedIddc).
+        header("Authorization", "Basic " + Base64.encodeNoNewline((accountSID + ":" + authToken).getBytes())).
+        getAsJsonMap();
                         
                         AffichageFormationuser c = new AffichageFormationuser();
                         c.getF().show();

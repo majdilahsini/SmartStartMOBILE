@@ -55,7 +55,9 @@ public class FormationService {
                 p.setImage(obj.get("image").toString());
                    float duree = Float.parseFloat(obj.get("duree").toString());
                p.setDuree((int) duree);
-                
+               
+               float etatt = Float.parseFloat(obj.get("etatFormation").toString());
+               p.setEtat((int) etatt);
                 double deb_date =(double)datedebl.get("timestamp");
                 double fin_date =(double)dateFinl.get("timestamp");
                 Date dt = new Date((long)(deb_date*1000));
@@ -69,12 +71,14 @@ public class FormationService {
                float contact = Float.parseFloat(obj.get("contact").toString());
                  p.setContact((int) contact);
                                 p.setEmail(obj.get("email").toString());
-                                                float nombres = Float.parseFloat(obj.get("nombres").toString());
+                                             float  nombres = Float.parseFloat(obj.get("nombres").toString());
                 p.setNbres_inscrits((int) nombres);
+                  float  nombrestotales = Float.parseFloat(obj.get("nombrestotale").toString());
+                p.setNbres_initiale((int) nombrestotales);
              //   p.setNomentreprise(obj.get("entreprise.").toString());
 
 
-                System.out.println(p);
+            //    System.out.println(p);
                 
                 listProduits.add(p);
 
@@ -86,14 +90,31 @@ public class FormationService {
         de la base de données à travers un service web
         
         */
-        System.out.println(listProduits);
+      //  System.out.println(listProduits);
         return listProduits;
 
     }
         ArrayList<Formation> listProduits = new ArrayList<>();
         public ArrayList<Formation> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev2/web/app_dev.php/api/inscriptions/formations/allfor");  
+     //   con.setUrl("http://localhost/pidev2/web/app_dev.php/api/inscriptions/formations/allfor/"+1);  
+     con.setUrl("http://localhost/pidev2/web/app_dev.php/api/inscriptions/alluserformations");
+        con.setPost(false);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                FormationService ser = new FormationService();
+                listProduits = ser.parseListTaskJson(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listProduits;
+    }
+        
+        public ArrayList<Formation> getList1(){       
+        ConnectionRequest con = new ConnectionRequest();
+       con.setUrl("http://localhost/pidev2/web/app_dev.php/api/inscriptions/formations/allfor/"+1);  
+    // con.setUrl("http://localhost/pidev2/web/app_dev.php/api/inscriptions/alluserformations");
         con.setPost(false);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -159,6 +180,7 @@ public class FormationService {
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
+     
      
         
 }
