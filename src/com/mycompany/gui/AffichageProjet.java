@@ -15,12 +15,14 @@ import com.codename1.charts.views.PieChart;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.components.SpanLabel;
+import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComboBox;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
@@ -412,7 +414,7 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
  { 
      
      Container c1 =new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        Form f2=(Form)new Form("PROJET",new BoxLayout(BoxLayout.Y_AXIS));
+        Form f2=(Form)new Form("   PROJET :"+a.getNomprojet(),new BoxLayout(BoxLayout.Y_AXIS));
         //---------------------------------------------------------------
         Resources theme;
     EncodedImage enc ;
@@ -448,15 +450,17 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
         else
            c1.add(createPieChartForm((double)(0),(double)(a.getMontant())));
 
-        c1.add(invest);
-         c1.add(modifier);
+        //c1.add(invest);
+        // c1.add(modifier);
           
       
         
         f2.add(c1);
        
         final int id=a.getIdProjet();
-        invest.addActionListener(e->{
+        
+        
+        f2.getToolbar().addCommandToOverflowMenu("supprimer",null,e->{
             
         ServiceProjet s=new ServiceProjet();
         TwilioSMS sms=new TwilioSMS("ACaa1a4f312d916842b47cd283604a4b74","1392160125d5296e5eac8e2704fae690","+12054303463");
@@ -465,7 +469,9 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
         s.supprimerProjet(id);
             
         });
-        modifier.addActionListener(e->{
+        
+        
+         f2.getToolbar().addCommandToOverflowMenu("modifier",null,e->{
             
         modifierProjet(a);
             
@@ -497,7 +503,7 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
  }
  public void modifierProjet(Projet a)
  {
-     Form f1 = new Form(new BoxLayout(BoxLayout.Y_AXIS));
+     Form f1 = new Form("           Projet :    "+a.getNomprojet(),new BoxLayout(BoxLayout.Y_AXIS));
          Button back=new Button("back");
         Button modifier=new Button("modifier");
         //------------------------------------------
@@ -518,7 +524,7 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
         
         Label cartel= new Label();
        
-        Label descl= new Label();
+        SpanLabel descl= new SpanLabel();
        
        Label vfl= new Label();
        
@@ -559,7 +565,7 @@ datePicker1.setType(Display.PICKER_TYPE_DATE);
         cartel.setText("Carte bancaire :");
         descl.setText("Description :");
         vfl.setText("Montant a attendre :");
-        datedl.setText("daate debut :");
+        datedl.setText("date debut :");
         NTl.setText("nbre de team :");
         datefl.setText("date fin :");
            
@@ -575,15 +581,15 @@ datePicker1.setType(Display.PICKER_TYPE_DATE);
       Date date;
       Date date2;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(originalString1);
-            String newstr = new SimpleDateFormat("MM/dd/yyyy").format(date);
+            date = new SimpleDateFormat("dd-MM-yyyy").parse(originalString1);
+            String newstr = new SimpleDateFormat("dd-MM-yyyy").format(date);
              datePicker1.setText(newstr);
         } catch (ParseException ex) {
             //Logger.getLogger(Affichage.class.getName()).log(Level.SEVERE, null, ex);
         }
       try {
-            date2 = new SimpleDateFormat("yyyy-MM-dd").parse(originalString2);
-            String newstr2 = new SimpleDateFormat("MM/dd/yyyy").format(date2);
+            date2 = new SimpleDateFormat("dd-MM-yyyy").parse(originalString2);
+            String newstr2 = new SimpleDateFormat("dd-MM-yyyy").format(date2);
              datePicker2.setText(newstr2);
         } catch (ParseException ex) {
             //Logger.getLogger(Affichage.class.getName()).log(Level.SEVERE, null, ex);
@@ -592,43 +598,95 @@ datePicker1.setType(Display.PICKER_TYPE_DATE);
         
         f1.add(modifier);
         f1.add(back);
-        f1.show();
+        f1.show(); 
         modifier.addActionListener(e->{
+            String erreur="";
+            int i=0;
             ServiceProjet s=new ServiceProjet();
-           if(!montant.getText().equals("")){
+           if(!montant.getText().equals("")&& isNumber(montant.getText())){
             int i1=  Integer.parseInt(montant.getText());
             a.setMontant(i1);
-            
+            i++;
+           }else{
+              erreur=erreur+" | le montant erreur | "; 
            }
-           if(!NT.getText().equals("")){
+           if(!NT.getText().equals("")&&isNumber(NT.getText())){
               int i3=  Integer.parseInt(NT.getText());
                a.setNbreTeam(i3);
-              
+              i++;
            }
-            if(!vf.getText().equals("")){
+           else{
+                erreur=erreur+" | le nbre team erreur | "; 
+           }
+            if(!vf.getText().equals("") ){
               float i4=  Float.parseFloat(vf.getText());
                a.setVotreFinance(i4);
+               i++;
+            }
+            else{
+                 erreur=erreur+" | le montant actuelle erreur | "; 
             }
                //int i5=  Integer.parseInt(NT.getText());
                 if(!carte.getText().equals("")){
             long i2=  Long.parseLong(carte.getText());
              a.setCompteBancaire(i2);
+             i++;
                 }
           
             
-            if(!carte.getText().equals("")){
+            if(!carte.getText().equals("")&&isNumber(carte.getText())){
            
             a.setDescriptionProjet(desc.getText());
+            i++;
+            }else{
+                 erreur=erreur+" | le Rib  erreur | "; 
             }
-            a.setDateDebutProjet(datePicker1.getText());
-            a.setDateFinProjet(datePicker2.getText());
-           // System.out.println(datePicker1.getText());
-           
+    
+            
+      Date date3;
+      Date date4;
+        Date currExpiry = new Date(); 
+       
+      if(vaideDate(datePicker1.getDate())) {
+      a.setDateDebutProjet(datePicker1.getText());
+      i++;
+      }
+      else{
+           erreur=erreur+" | le date  erreur | "; 
+      
+      }
+      
+      if(vaideDateF(datePicker1.getDate(),datePicker2.getDate())) {
+      a.setDateFinProjet(datePicker2.getText());
+      i++;
+      }
+      else
+      {
+           erreur=erreur+" | le date Fin doit etre sup de date debut  erreur | ";
+      }
+       
+            
+            System.out.println(i);
+             System.out.println(i);
+             if(i>=7){
+           if(Dialog.show("Click Yes Or No", "modifier projet ", "Yes", "No")){
             s.modifierProjet(a);
             
+         try {
+             showProjet(a);
+         } catch (IOException ex) {
+           
+         }}
+           }
+           else
+               Dialog.show("ERREUR  DE SAISIR ", "erreur : "+erreur, "Yes", "No");
+         
+               
+         
+         
         });
         
-         f1.getToolbar().addCommandToRightBar("back", null, (ev)->{  
+         back.addActionListener(ev->{  
              
          try {
              showProjet(a);
@@ -638,7 +696,7 @@ datePicker1.setType(Display.PICKER_TYPE_DATE);
         
           });
         
-        
+       
         
     }
  
@@ -753,6 +811,66 @@ final Projet a=data1.get(i);
         return f;
     }
 
- 
+  
+    
+    
+  public boolean isNumber(String ch) {
+       String v = (String)ch;
+    for(int i = 0 ; i < v.length() ; i++) {
+      char c = v.charAt(i);
+      if(c >= '0' && c <= '9' || c == '+' || c == '-') {
+        continue;
+      }
+      return false;
+    }
+    return true;
+  }
+  
+    
+    public boolean vaideDate(Date datep)
+    {
+        Date date =datep;
+                   //System.err.println(date);Wed Jan 01 14:31:57 WAT 2020
+               DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+               String strDate = dateFormat.format(date);
+                         String today = dateFormat.format(new Date());
+
+               
+              
+              if  (today.compareTo(strDate)>=0){
+                  return false;
+              }
+              else
+                  return true;
+    }
+    
+    
+    public boolean vaideDateF(Date datepD,Date datepF)
+    {
+        Date dated =datepD;
+         Date datef =datepF;
+                   //System.err.println(date);Wed Jan 01 14:31:57 WAT 2020
+               DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+               String strDate1 = dateFormat.format(dated);
+                String strDate2 = dateFormat.format(datef);
+                         String today = dateFormat.format(new Date());
+                        
+               
+              
+              if  (strDate1.compareTo(strDate2)>=0){
+                  return false;
+              }
+              else
+                  return true;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
  
 }

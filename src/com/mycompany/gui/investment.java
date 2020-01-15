@@ -10,10 +10,14 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.TextComponent;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.validation.LengthConstraint;
+import com.codename1.ui.validation.NumericConstraint;
+import com.codename1.ui.validation.Validator;
 import com.mycompany.Entite.Projet;
 import com.mycompany.Entite.TwilioSMS;
 import com.mycompany.Service.ServiceProjet;
@@ -31,19 +35,24 @@ public class investment {
         Form f1 = new Form(new BoxLayout(BoxLayout.Y_AXIS));
          Button back=new Button("back");
         Button invest=new Button("invest");
-        TextField montant=new TextField();
-        montant.setHint("Montant");
-        TextField carte=new TextField();
-        carte.setHint("carte bancaire");
-        
+        //TextField montant=new TextField();
+       // montant.setHint("Montant");
+        //TextField carte=new TextField();
+       // carte.setHint("carte bancaire");
+        Validator val = new Validator();
+        TextComponent montant=new TextComponent().label("montant"); 
+        TextComponent carte=new TextComponent ().label("Carte Bancaire"); 
+
+val.addConstraint(montant, new NumericConstraint(true));
+val.addConstraint(carte, new NumericConstraint(true));
         f1.add(montant);
         f1.add(carte);
         f1.add(invest);
       
         f1.show();
         invest.addActionListener(e->{
-            
-                           Dialog.show("invest"," accepter votre invest ","cancel","ok");
+            if(!montant.getText().equals("") && isNumber(montant.getText())&&  isNumber(carte.getText())&&!carte.getText().equals("")  ){
+                        if( Dialog.show("invest"," accepter votre invest ","yes","no")){
 
             ServiceProjet s=new ServiceProjet();
             int i1=  Integer.parseInt(montant.getText());
@@ -59,7 +68,7 @@ public class investment {
                   p.showProjet(a);
             } catch (IOException ex) {
                 //Logger.getLogger(investment.class.getName()).log(Level.SEVERE, null, ex);
-            }  
+            } } }
         });
         Style si = UIManager.getInstance().getComponentStyle("Button"); 
 FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
@@ -73,11 +82,21 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
         
           });
         
-        
+        f1.show(); 
         
     }
     
-    
+  public boolean isNumber(String ch) {
+       String v = (String)ch;
+    for(int i = 0 ; i < v.length() ; i++) {
+      char c = v.charAt(i);
+      if(c >= '0' && c <= '9' || c == '+' || c == '-') {
+        continue;
+      }
+      return false;
+    }
+    return true;
+  }  
     
     
 }

@@ -89,7 +89,7 @@ public class ServiceInvestissement {
     
     
                 
-                System.out.println(i);
+               
                 
                 listInvest.add(i);
 
@@ -111,13 +111,13 @@ public class ServiceInvestissement {
     
     public ArrayList<Investissement> getInvest(int id){       
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost:82/piedv/web/app_dev.php/projetuser/affichinvM?id=18"); 
-        System.out.println("---------------------------------------------------------------------test1-----------------------------------");//
+        con.setUrl("http://localhost:82/pidev2/web/app_dev.php/project/projetuser/affichinvM?id="+id); 
+       // System.out.println("---------------------------------------------------------------------test1-----------------------------------");//
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 ServiceInvestissement ser = new ServiceInvestissement();
-                        System.out.println("---------------------------------------------------------------------test2-----------------------------------");//
+                       // System.out.println("---------------------------------------------------------------------test2-----------------------------------");//
 
                 String str = new String(con.getResponseData());//Récupération de la réponse du serveur
                        // System.out.println("---------------------------------------------------------------------"+str+"-----------------------------------");//

@@ -59,7 +59,7 @@ Form f;
          ArrayList<Projet> dataSearch=new ArrayList();
         for(int j=0;j<data.size();j++)
         {
-            if(data.get(j).getIdEtat()==3)
+            if(data.get(j).getIdEtat()==3 || data.get(j).getMontant()>=data.get(j).getVotreFinance() )
             {
                 data.remove(j);
                 
@@ -392,7 +392,7 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
  { 
      
      Container c1 =new Container(new BoxLayout(BoxLayout.Y_AXIS));
-        Form f2=(Form)new Form("PROJET",new BoxLayout(BoxLayout.Y_AXIS));
+        Form f2=(Form)new Form("       PROJET :  "+a.getNomprojet(),new BoxLayout(BoxLayout.Y_AXIS));
         //---------------------------------------------------------------
         Resources theme;
     EncodedImage enc ;
@@ -415,7 +415,7 @@ FontImage backimg = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, si);
         c1.add(adresse);
         Label email= new Label();
         c1.add(email);
-       Label Description= new Label();
+       SpanLabel Description= new SpanLabel();
         c1.add(Description);
         Label categorie= new Label();
         c1.add(categorie);
