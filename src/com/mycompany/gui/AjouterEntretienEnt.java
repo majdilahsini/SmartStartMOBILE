@@ -143,9 +143,9 @@ String fromPhone = "+13306178577";
         header("Authorization", "Basic " + Base64.encodeNoNewline((accountSID + ":" + authToken).getBytes())).
         getAsJsonMap();
                */
-    TwilioSMS sms=new TwilioSMS("ACaa1a4f312d916842b47cd283604a4b74","1392160125d5296e5eac8e2704fae690","+12054303463");
+    /*TwilioSMS sms=new TwilioSMS("ACaa1a4f312d916842b47cd283604a4b74","1392160125d5296e5eac8e2704fae690","+12054303463");
             sms.sendSmsAsync("+21652003948","Félicitation vous étes selectioné pour un entretien "+"\n"+"avec l'Entreprise:"+OffreEnt.focusedNomEntre+"\n"+"pour le Poste:"+"\n"+OffreEnt.focusedPoste+"\n"+"Heure:"+time+"\n"+"Date:"+"\n"+strDate+"\n");
-            
+         */   
                  ////////////////
 
                 
